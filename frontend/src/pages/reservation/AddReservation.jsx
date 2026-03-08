@@ -1,7 +1,8 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,40 +23,57 @@ const reservationSchema = z.object({
   price: z.string(),
 });
 
-export default function AddReservation() {
-  const [searchParams] = useSearchParams();
+export default function AddReservation({
+  onClose,
+  selectedDate,
+  selectedLocation,
+  initialTime = "",
+  initialCourt = "",
+}) {
   const navigate = useNavigate();
-
-  const locationParam = searchParams.get("location") || "Bandung";
-  const dateParam =
-    searchParams.get("date") || new Date().toISOString().split("T")[0];
   const fixedPrice = "Rp 50.000";
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(reservationSchema),
     defaultValues: {
-      location: locationParam,
-      date: dateParam,
-      time: "",
-      court: "",
+      location: selectedLocation || "Bandung",
+      date: selectedDate || new Date().toISOString().split("T")[0],
+      time: initialTime,
+      court: initialCourt,
       price: fixedPrice,
     },
   });
+
+  // Update form values when props change
+  useEffect(() => {
+    reset({
+      location: selectedLocation,
+      date: selectedDate,
+      time: initialTime,
+      court: initialCourt,
+      price: fixedPrice,
+    });
+  }, [selectedLocation, selectedDate, initialTime, initialCourt, reset]);
 
   function onSubmit(values) {
     console.log("Reservation Submitted:", values);
     alert(
       `Reservasi Berhasil!\n\nLapangan: ${values.court}\nLokasi: ${values.location}\nTanggal: ${values.date}\nWaktu: ${values.time}\nHarga: ${values.price}`,
     );
-    navigate("/reservasi");
+    if (onClose) {
+      onClose();
+    } else {
+      navigate("/reservasi");
+    }
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-linear-to-br from-slate-50 to-slate-200 p-4 dark:from-slate-950 dark:to-slate-900">
+    <div className="flex flex-1 items-center justify-center bg-transparent p-4">
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Tambah Reservasi</CardTitle>
@@ -147,7 +165,7 @@ export default function AddReservation() {
         <CardFooter className="justify-center">
           <Button
             variant="link"
-            onClick={() => navigate("/reservasi")}
+            onClick={onClose || (() => navigate("/reservasi"))}
             className="text-muted-foreground"
           >
             Batal

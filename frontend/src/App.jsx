@@ -9,7 +9,6 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import Home from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import ReservationList from "./pages/reservation/ReservationList";
-import AddReservation from "./pages/reservation/AddReservation";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/reservasi" element={<ReservationList />} />
-            <Route path="/reservasi/tambah" element={<AddReservation />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

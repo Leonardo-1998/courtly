@@ -607,7 +607,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ReservationScalarFieldEnum = {
   id: 'id',
-  time: 'time',
+  startTime: 'startTime',
+  endTime: 'endTime',
   court: 'court',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

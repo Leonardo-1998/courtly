@@ -1,14 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import AddReservation from "./AddReservation";
+import ReservationTable from "./ReservationTable";
 
 const scheduleData = [
   { time: "09.00 - 10.00", A: "Kosong", B: "Kosong", C: "Kosong" },
@@ -21,18 +14,49 @@ const scheduleData = [
   { time: "16.00 - 17.00", A: "Kosong", B: "Kosong", C: "Kosong" },
 ];
 
+const scheduleTime = [
+  "09.00 - 10.00",
+  "10.00 - 11.00",
+  "11.00 - 12.00",
+  "12.00 - 13.00",
+  "13.00 - 14.00",
+  "14.00 - 15.00",
+  "15.00 - 16.00",
+  "16.00 - 17.00",
+];
+
 export default function ReservationList() {
-  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0],
   );
   const [selectedLocation, setSelectedLocation] = useState("Bandung");
+  const [view, setView] = useState("list");
+  const [prefillData, setPrefillData] = useState({ time: "", court: "" });
 
   const handleAddReservation = () => {
-    navigate(
-      `/reservasi/tambah?date=${selectedDate}&location=${selectedLocation}`,
-    );
+    setPrefillData({ time: "", court: "" });
+    setView("add");
   };
+
+  const handleCellClick = (time, court) => {
+    setPrefillData({ time, court });
+    setView("add");
+  };
+
+  if (view === "add") {
+    return (
+      <AddReservation
+        selectedDate={selectedDate}
+        selectedLocation={selectedLocation}
+        initialTime={prefillData.time}
+        initialCourt={prefillData.court}
+        onClose={() => {
+          setView("list");
+          setPrefillData({ time: "", court: "" });
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex-1 p-8 bg-slate-50 dark:bg-slate-900">
@@ -79,59 +103,12 @@ export default function ReservationList() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md border overflow-hidden">
-          <Table>
-            <TableHeader className="bg-slate-50 dark:bg-slate-900/50">
-              <TableRow>
-                <TableHead className="w-[150px] font-bold">Waktu</TableHead>
-                <TableHead className="text-center font-bold">
-                  Lapangan A
-                </TableHead>
-                <TableHead className="text-center font-bold">
-                  Lapangan B
-                </TableHead>
-                <TableHead className="text-center font-bold">
-                  Lapangan C
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {scheduleData.map((row, index) => (
-                <TableRow
-                  key={index}
-                  className="hover:bg-slate-100/50 dark:hover:bg-slate-700/50"
-                >
-                  <TableCell className="font-medium">{row.time}</TableCell>
-                  <TableCell className="text-center">
-                    <StatusBadge status={row.A} />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <StatusBadge status={row.B} />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <StatusBadge status={row.C} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <ReservationTable
+          scheduleData={scheduleData}
+          scheduleTime={scheduleTime}
+          onCellClick={handleCellClick}
+        />
       </div>
     </div>
-  );
-}
-
-function StatusBadge({ status }) {
-  const isAvailable = status === "Kosong";
-  return (
-    <span
-      className={`px-3 py-1 rounded-full text-xs font-semibold border ${
-        isAvailable
-          ? "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800"
-          : "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800"
-      }`}
-    >
-      {status}
-    </span>
   );
 }

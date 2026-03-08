@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "@/lib/axios";
 
 const registerSchema = z.object({
   email: z.string().email({ message: "Email tidak valid" }),
@@ -41,15 +41,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (values) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/user/register",
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const response = await api.post("/user/register", values);
 
       reset();
       navigate("/login");

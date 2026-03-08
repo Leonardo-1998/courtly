@@ -27,8 +27,10 @@ model User {
 
 model Reservation {
   id String @id @default(uuid())
-  time DateTime
-  court String
+  startTime Integer
+  endTime Integer
+  date DateTime
+  location String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)

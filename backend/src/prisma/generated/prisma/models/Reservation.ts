@@ -26,7 +26,8 @@ export type AggregateReservation = {
 
 export type ReservationMinAggregateOutputType = {
   id: string | null
-  time: Date | null
+  startTime: string | null
+  endTime: string | null
   court: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -36,7 +37,8 @@ export type ReservationMinAggregateOutputType = {
 
 export type ReservationMaxAggregateOutputType = {
   id: string | null
-  time: Date | null
+  startTime: string | null
+  endTime: string | null
   court: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -46,7 +48,8 @@ export type ReservationMaxAggregateOutputType = {
 
 export type ReservationCountAggregateOutputType = {
   id: number
-  time: number
+  startTime: number
+  endTime: number
   court: number
   createdAt: number
   updatedAt: number
@@ -58,7 +61,8 @@ export type ReservationCountAggregateOutputType = {
 
 export type ReservationMinAggregateInputType = {
   id?: true
-  time?: true
+  startTime?: true
+  endTime?: true
   court?: true
   createdAt?: true
   updatedAt?: true
@@ -68,7 +72,8 @@ export type ReservationMinAggregateInputType = {
 
 export type ReservationMaxAggregateInputType = {
   id?: true
-  time?: true
+  startTime?: true
+  endTime?: true
   court?: true
   createdAt?: true
   updatedAt?: true
@@ -78,7 +83,8 @@ export type ReservationMaxAggregateInputType = {
 
 export type ReservationCountAggregateInputType = {
   id?: true
-  time?: true
+  startTime?: true
+  endTime?: true
   court?: true
   createdAt?: true
   updatedAt?: true
@@ -161,7 +167,8 @@ export type ReservationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type ReservationGroupByOutputType = {
   id: string
-  time: Date
+  startTime: string
+  endTime: string
   court: string
   createdAt: Date
   updatedAt: Date
@@ -192,7 +199,8 @@ export type ReservationWhereInput = {
   OR?: Prisma.ReservationWhereInput[]
   NOT?: Prisma.ReservationWhereInput | Prisma.ReservationWhereInput[]
   id?: Prisma.StringFilter<"Reservation"> | string
-  time?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  startTime?: Prisma.StringFilter<"Reservation"> | string
+  endTime?: Prisma.StringFilter<"Reservation"> | string
   court?: Prisma.StringFilter<"Reservation"> | string
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -203,7 +211,8 @@ export type ReservationWhereInput = {
 
 export type ReservationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   court?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -217,7 +226,8 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ReservationWhereInput | Prisma.ReservationWhereInput[]
   OR?: Prisma.ReservationWhereInput[]
   NOT?: Prisma.ReservationWhereInput | Prisma.ReservationWhereInput[]
-  time?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  startTime?: Prisma.StringFilter<"Reservation"> | string
+  endTime?: Prisma.StringFilter<"Reservation"> | string
   court?: Prisma.StringFilter<"Reservation"> | string
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -228,7 +238,8 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
 
 export type ReservationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   court?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -244,7 +255,8 @@ export type ReservationScalarWhereWithAggregatesInput = {
   OR?: Prisma.ReservationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ReservationScalarWhereWithAggregatesInput | Prisma.ReservationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
-  time?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
+  startTime?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
+  endTime?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
   court?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
@@ -254,7 +266,8 @@ export type ReservationScalarWhereWithAggregatesInput = {
 
 export type ReservationCreateInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -264,7 +277,8 @@ export type ReservationCreateInput = {
 
 export type ReservationUncheckedCreateInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -274,7 +288,8 @@ export type ReservationUncheckedCreateInput = {
 
 export type ReservationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -284,7 +299,8 @@ export type ReservationUpdateInput = {
 
 export type ReservationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -294,7 +310,8 @@ export type ReservationUncheckedUpdateInput = {
 
 export type ReservationCreateManyInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -304,7 +321,8 @@ export type ReservationCreateManyInput = {
 
 export type ReservationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,7 +331,8 @@ export type ReservationUpdateManyMutationInput = {
 
 export type ReservationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -333,7 +352,8 @@ export type ReservationOrderByRelationAggregateInput = {
 
 export type ReservationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   court?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -343,7 +363,8 @@ export type ReservationCountOrderByAggregateInput = {
 
 export type ReservationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   court?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -353,7 +374,8 @@ export type ReservationMaxOrderByAggregateInput = {
 
 export type ReservationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
   court?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -405,7 +427,8 @@ export type ReservationUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type ReservationCreateWithoutUserInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -414,7 +437,8 @@ export type ReservationCreateWithoutUserInput = {
 
 export type ReservationUncheckedCreateWithoutUserInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -452,7 +476,8 @@ export type ReservationScalarWhereInput = {
   OR?: Prisma.ReservationScalarWhereInput[]
   NOT?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
   id?: Prisma.StringFilter<"Reservation"> | string
-  time?: Prisma.DateTimeFilter<"Reservation"> | Date | string
+  startTime?: Prisma.StringFilter<"Reservation"> | string
+  endTime?: Prisma.StringFilter<"Reservation"> | string
   court?: Prisma.StringFilter<"Reservation"> | string
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
@@ -462,7 +487,8 @@ export type ReservationScalarWhereInput = {
 
 export type ReservationCreateManyUserInput = {
   id?: string
-  time: Date | string
+  startTime: string
+  endTime: string
   court: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -471,7 +497,8 @@ export type ReservationCreateManyUserInput = {
 
 export type ReservationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -480,7 +507,8 @@ export type ReservationUpdateWithoutUserInput = {
 
 export type ReservationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -489,7 +517,8 @@ export type ReservationUncheckedUpdateWithoutUserInput = {
 
 export type ReservationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
   court?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -500,7 +529,8 @@ export type ReservationUncheckedUpdateManyWithoutUserInput = {
 
 export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  startTime?: boolean
+  endTime?: boolean
   court?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -511,7 +541,8 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  startTime?: boolean
+  endTime?: boolean
   court?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -522,7 +553,8 @@ export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  startTime?: boolean
+  endTime?: boolean
   court?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -533,7 +565,8 @@ export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type ReservationSelectScalar = {
   id?: boolean
-  time?: boolean
+  startTime?: boolean
+  endTime?: boolean
   court?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -541,7 +574,7 @@ export type ReservationSelectScalar = {
   userId?: boolean
 }
 
-export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "time" | "court" | "createdAt" | "updatedAt" | "isDeleted" | "userId", ExtArgs["result"]["reservation"]>
+export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "court" | "createdAt" | "updatedAt" | "isDeleted" | "userId", ExtArgs["result"]["reservation"]>
 export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -559,7 +592,8 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    time: Date
+    startTime: string
+    endTime: string
     court: string
     createdAt: Date
     updatedAt: Date
@@ -990,7 +1024,8 @@ export interface Prisma__ReservationClient<T, Null = never, ExtArgs extends runt
  */
 export interface ReservationFieldRefs {
   readonly id: Prisma.FieldRef<"Reservation", 'String'>
-  readonly time: Prisma.FieldRef<"Reservation", 'DateTime'>
+  readonly startTime: Prisma.FieldRef<"Reservation", 'String'>
+  readonly endTime: Prisma.FieldRef<"Reservation", 'String'>
   readonly court: Prisma.FieldRef<"Reservation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reservation", 'DateTime'>

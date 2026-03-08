@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "@/lib/axios";
 
 const loginSchema = z.object({
   identifier: z
@@ -41,15 +41,7 @@ export default function LoginPage() {
 
   const onSubmit = async (values) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/user/login",
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const response = await api.post("/user/login", values);
 
       const token = response.data.data;
       localStorage.setItem("accessToken", token);
