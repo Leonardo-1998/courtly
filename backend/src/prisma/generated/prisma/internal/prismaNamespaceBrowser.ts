@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Reservation: 'Reservation'
+  Reservation: 'Reservation',
+  Midtrans: 'Midtrans'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -95,10 +96,26 @@ export const ReservationScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  userId: 'userId'
+  status: 'status',
+  userId: 'userId',
+  midtransId: 'midtransId'
 } as const
 
 export type ReservationScalarFieldEnum = (typeof ReservationScalarFieldEnum)[keyof typeof ReservationScalarFieldEnum]
+
+
+export const MidtransScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  grossAmount: 'grossAmount',
+  token: 'token',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted'
+} as const
+
+export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typeof MidtransScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -14,6 +14,27 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ReservationStatus {
+  PENDING   @map("pending")
+  PAID      @map("paid")
+  CANCELLED @map("cancelled")
+}
+
+enum MidtransStatus {
+  PENDING    @map("pending")
+  SETTLEMENT @map("settlement")
+  EXPIRE     @map("expire")
+  DENY       @map("deny")
+  CANCEL     @map("cancel")
+  CAPTURE    @map("capture")
+  FAILURE    @map("failure")
+  REFUND     @map("refund")
+  CHARGEBACK @map("chargeback")
+  PARTIAL_REFUND @map("partial_refund")
+  PARTIAL_CHARGEBACK @map("partial_chargeback")
+  AUTHORIZED @map("authorized")
+}
+
 model User {
   id    String @id @default(uuid())
   email String @unique
@@ -36,9 +57,25 @@ model Reservation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)
+  status ReservationStatus @default(PENDING)
 
   user User @relation(fields: [userId], references: [id])
   userId String
+
+  midtrans Midtrans @relation(fields: [midtransId], references: [id])
+  midtransId String
+
 }
 
+model Midtrans {
+  id String @id @default(uuid())
+  orderId String
+  grossAmount Int
+  token String
+  status MidtransStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean @default(false)
 
+  reservation Reservation[]
+}

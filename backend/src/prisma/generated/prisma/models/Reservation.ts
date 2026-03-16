@@ -35,7 +35,9 @@ export type ReservationMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
+  status: $Enums.ReservationStatus | null
   userId: string | null
+  midtransId: string | null
 }
 
 export type ReservationMaxAggregateOutputType = {
@@ -49,7 +51,9 @@ export type ReservationMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
+  status: $Enums.ReservationStatus | null
   userId: string | null
+  midtransId: string | null
 }
 
 export type ReservationCountAggregateOutputType = {
@@ -63,7 +67,9 @@ export type ReservationCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   isDeleted: number
+  status: number
   userId: number
+  midtransId: number
   _all: number
 }
 
@@ -79,7 +85,9 @@ export type ReservationMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
+  status?: true
   userId?: true
+  midtransId?: true
 }
 
 export type ReservationMaxAggregateInputType = {
@@ -93,7 +101,9 @@ export type ReservationMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
+  status?: true
   userId?: true
+  midtransId?: true
 }
 
 export type ReservationCountAggregateInputType = {
@@ -107,7 +117,9 @@ export type ReservationCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
+  status?: true
   userId?: true
+  midtransId?: true
   _all?: true
 }
 
@@ -194,7 +206,9 @@ export type ReservationGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   isDeleted: boolean
+  status: $Enums.ReservationStatus
   userId: string
+  midtransId: string
   _count: ReservationCountAggregateOutputType | null
   _min: ReservationMinAggregateOutputType | null
   _max: ReservationMaxAggregateOutputType | null
@@ -229,8 +243,11 @@ export type ReservationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   userId?: Prisma.StringFilter<"Reservation"> | string
+  midtransId?: Prisma.StringFilter<"Reservation"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  midtrans?: Prisma.XOR<Prisma.MidtransScalarRelationFilter, Prisma.MidtransWhereInput>
 }
 
 export type ReservationOrderByWithRelationInput = {
@@ -244,8 +261,11 @@ export type ReservationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  midtrans?: Prisma.MidtransOrderByWithRelationInput
 }
 
 export type ReservationWhereUniqueInput = Prisma.AtLeast<{
@@ -262,8 +282,11 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   userId?: Prisma.StringFilter<"Reservation"> | string
+  midtransId?: Prisma.StringFilter<"Reservation"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  midtrans?: Prisma.XOR<Prisma.MidtransScalarRelationFilter, Prisma.MidtransWhereInput>
 }, "id">
 
 export type ReservationOrderByWithAggregationInput = {
@@ -277,7 +300,9 @@ export type ReservationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
   _count?: Prisma.ReservationCountOrderByAggregateInput
   _max?: Prisma.ReservationMaxOrderByAggregateInput
   _min?: Prisma.ReservationMinOrderByAggregateInput
@@ -297,7 +322,9 @@ export type ReservationScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusWithAggregatesFilter<"Reservation"> | $Enums.ReservationStatus
   userId?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
+  midtransId?: Prisma.StringWithAggregatesFilter<"Reservation"> | string
 }
 
 export type ReservationCreateInput = {
@@ -311,7 +338,9 @@ export type ReservationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
   user: Prisma.UserCreateNestedOneWithoutReservationsInput
+  midtrans: Prisma.MidtransCreateNestedOneWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateInput = {
@@ -325,7 +354,9 @@ export type ReservationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
   userId: string
+  midtransId: string
 }
 
 export type ReservationUpdateInput = {
@@ -339,7 +370,9 @@ export type ReservationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   user?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+  midtrans?: Prisma.MidtransUpdateOneRequiredWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateInput = {
@@ -353,7 +386,9 @@ export type ReservationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  midtransId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ReservationCreateManyInput = {
@@ -367,7 +402,9 @@ export type ReservationCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
   userId: string
+  midtransId: string
 }
 
 export type ReservationUpdateManyMutationInput = {
@@ -381,6 +418,7 @@ export type ReservationUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
 }
 
 export type ReservationUncheckedUpdateManyInput = {
@@ -394,7 +432,9 @@ export type ReservationUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  midtransId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ReservationListRelationFilter = {
@@ -418,7 +458,9 @@ export type ReservationCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type ReservationMaxOrderByAggregateInput = {
@@ -432,7 +474,9 @@ export type ReservationMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type ReservationMinOrderByAggregateInput = {
@@ -446,7 +490,9 @@ export type ReservationMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type ReservationCreateNestedManyWithoutUserInput = {
@@ -491,6 +537,52 @@ export type ReservationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
 }
 
+export type EnumReservationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ReservationStatus
+}
+
+export type ReservationCreateNestedManyWithoutMidtransInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput> | Prisma.ReservationCreateWithoutMidtransInput[] | Prisma.ReservationUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutMidtransInput | Prisma.ReservationCreateOrConnectWithoutMidtransInput[]
+  createMany?: Prisma.ReservationCreateManyMidtransInputEnvelope
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+}
+
+export type ReservationUncheckedCreateNestedManyWithoutMidtransInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput> | Prisma.ReservationCreateWithoutMidtransInput[] | Prisma.ReservationUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutMidtransInput | Prisma.ReservationCreateOrConnectWithoutMidtransInput[]
+  createMany?: Prisma.ReservationCreateManyMidtransInputEnvelope
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+}
+
+export type ReservationUpdateManyWithoutMidtransNestedInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput> | Prisma.ReservationCreateWithoutMidtransInput[] | Prisma.ReservationUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutMidtransInput | Prisma.ReservationCreateOrConnectWithoutMidtransInput[]
+  upsert?: Prisma.ReservationUpsertWithWhereUniqueWithoutMidtransInput | Prisma.ReservationUpsertWithWhereUniqueWithoutMidtransInput[]
+  createMany?: Prisma.ReservationCreateManyMidtransInputEnvelope
+  set?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  disconnect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  delete?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  update?: Prisma.ReservationUpdateWithWhereUniqueWithoutMidtransInput | Prisma.ReservationUpdateWithWhereUniqueWithoutMidtransInput[]
+  updateMany?: Prisma.ReservationUpdateManyWithWhereWithoutMidtransInput | Prisma.ReservationUpdateManyWithWhereWithoutMidtransInput[]
+  deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
+}
+
+export type ReservationUncheckedUpdateManyWithoutMidtransNestedInput = {
+  create?: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput> | Prisma.ReservationCreateWithoutMidtransInput[] | Prisma.ReservationUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutMidtransInput | Prisma.ReservationCreateOrConnectWithoutMidtransInput[]
+  upsert?: Prisma.ReservationUpsertWithWhereUniqueWithoutMidtransInput | Prisma.ReservationUpsertWithWhereUniqueWithoutMidtransInput[]
+  createMany?: Prisma.ReservationCreateManyMidtransInputEnvelope
+  set?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  disconnect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  delete?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  connect?: Prisma.ReservationWhereUniqueInput | Prisma.ReservationWhereUniqueInput[]
+  update?: Prisma.ReservationUpdateWithWhereUniqueWithoutMidtransInput | Prisma.ReservationUpdateWithWhereUniqueWithoutMidtransInput[]
+  updateMany?: Prisma.ReservationUpdateManyWithWhereWithoutMidtransInput | Prisma.ReservationUpdateManyWithWhereWithoutMidtransInput[]
+  deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
+}
+
 export type ReservationCreateWithoutUserInput = {
   id?: string
   startTime: string
@@ -502,6 +594,8 @@ export type ReservationCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  midtrans: Prisma.MidtransCreateNestedOneWithoutReservationInput
 }
 
 export type ReservationUncheckedCreateWithoutUserInput = {
@@ -515,6 +609,8 @@ export type ReservationUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  midtransId: string
 }
 
 export type ReservationCreateOrConnectWithoutUserInput = {
@@ -557,7 +653,65 @@ export type ReservationScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   userId?: Prisma.StringFilter<"Reservation"> | string
+  midtransId?: Prisma.StringFilter<"Reservation"> | string
+}
+
+export type ReservationCreateWithoutMidtransInput = {
+  id?: string
+  startTime: string
+  endTime: string
+  date: Date | string
+  location: string
+  court: string
+  price: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  user: Prisma.UserCreateNestedOneWithoutReservationsInput
+}
+
+export type ReservationUncheckedCreateWithoutMidtransInput = {
+  id?: string
+  startTime: string
+  endTime: string
+  date: Date | string
+  location: string
+  court: string
+  price: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  userId: string
+}
+
+export type ReservationCreateOrConnectWithoutMidtransInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput>
+}
+
+export type ReservationCreateManyMidtransInputEnvelope = {
+  data: Prisma.ReservationCreateManyMidtransInput | Prisma.ReservationCreateManyMidtransInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReservationUpsertWithWhereUniqueWithoutMidtransInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReservationUpdateWithoutMidtransInput, Prisma.ReservationUncheckedUpdateWithoutMidtransInput>
+  create: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput>
+}
+
+export type ReservationUpdateWithWhereUniqueWithoutMidtransInput = {
+  where: Prisma.ReservationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReservationUpdateWithoutMidtransInput, Prisma.ReservationUncheckedUpdateWithoutMidtransInput>
+}
+
+export type ReservationUpdateManyWithWhereWithoutMidtransInput = {
+  where: Prisma.ReservationScalarWhereInput
+  data: Prisma.XOR<Prisma.ReservationUpdateManyMutationInput, Prisma.ReservationUncheckedUpdateManyWithoutMidtransInput>
 }
 
 export type ReservationCreateManyUserInput = {
@@ -571,6 +725,8 @@ export type ReservationCreateManyUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  midtransId: string
 }
 
 export type ReservationUpdateWithoutUserInput = {
@@ -584,6 +740,8 @@ export type ReservationUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  midtrans?: Prisma.MidtransUpdateOneRequiredWithoutReservationNestedInput
 }
 
 export type ReservationUncheckedUpdateWithoutUserInput = {
@@ -597,6 +755,8 @@ export type ReservationUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  midtransId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ReservationUncheckedUpdateManyWithoutUserInput = {
@@ -610,6 +770,68 @@ export type ReservationUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  midtransId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ReservationCreateManyMidtransInput = {
+  id?: string
+  startTime: string
+  endTime: string
+  date: Date | string
+  location: string
+  court: string
+  price: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  status?: $Enums.ReservationStatus
+  userId: string
+}
+
+export type ReservationUpdateWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  court?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  user?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
+}
+
+export type ReservationUncheckedUpdateWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  court?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ReservationUncheckedUpdateManyWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  court?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -625,8 +847,11 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
+  status?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -640,8 +865,11 @@ export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
+  status?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -655,8 +883,11 @@ export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
+  status?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reservation"]>
 
 export type ReservationSelectScalar = {
@@ -670,24 +901,30 @@ export type ReservationSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
+  status?: boolean
   userId?: boolean
+  midtransId?: boolean
 }
 
-export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "date" | "location" | "court" | "price" | "createdAt" | "updatedAt" | "isDeleted" | "userId", ExtArgs["result"]["reservation"]>
+export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "date" | "location" | "court" | "price" | "createdAt" | "updatedAt" | "isDeleted" | "status" | "userId" | "midtransId", ExtArgs["result"]["reservation"]>
 export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }
 export type ReservationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }
 export type ReservationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.MidtransDefaultArgs<ExtArgs>
 }
 
 export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Reservation"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    midtrans: Prisma.$MidtransPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -700,7 +937,9 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
+    status: $Enums.ReservationStatus
     userId: string
+    midtransId: string
   }, ExtArgs["result"]["reservation"]>
   composites: {}
 }
@@ -1096,6 +1335,7 @@ readonly fields: ReservationFieldRefs;
 export interface Prisma__ReservationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  midtrans<T extends Prisma.MidtransDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MidtransDefaultArgs<ExtArgs>>): Prisma.Prisma__MidtransClient<runtime.Types.Result.GetResult<Prisma.$MidtransPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1135,7 +1375,9 @@ export interface ReservationFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly isDeleted: Prisma.FieldRef<"Reservation", 'Boolean'>
+  readonly status: Prisma.FieldRef<"Reservation", 'ReservationStatus'>
   readonly userId: Prisma.FieldRef<"Reservation", 'String'>
+  readonly midtransId: Prisma.FieldRef<"Reservation", 'String'>
 }
     
 
@@ -1332,6 +1574,11 @@ export type ReservationFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` Reservations.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Reservations.
+   */
   distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
 }
 

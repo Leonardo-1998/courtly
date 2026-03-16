@@ -6,5 +6,6 @@ import { MidtransService } from './midtrans.service';
   imports: [],
   controllers: [MidtransController],
   providers: [MidtransService],
+  exports: [MidtransService],
 })
 export class MidtransModule {}

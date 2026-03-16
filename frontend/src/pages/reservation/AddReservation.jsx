@@ -138,17 +138,29 @@ export default function AddReservation({
   }, [selectedLocation, selectedDate, initialTime, initialCourt, reset]);
 
   const onSubmit = async (values) => {
-    console.log("Reservation Submitted:", values);
     try {
-      const response = await api.post("/midtrans/payment", values);
-      console.log(response);
-      // await api.post("/reservation/add", values);
+      const response = await api.post("/reservation/add", values);
 
-      // onClose();
+      window.snap.pay(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
+
+    const script = document.createElement("script");
+    script.src = snapScript;
+    script.async = true;
+    script.setAttribute("data-client-key", clientKey);
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="flex flex-1 items-center justify-center bg-transparent p-4">

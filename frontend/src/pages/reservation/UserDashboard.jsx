@@ -22,7 +22,9 @@ const UserDashboard = () => {
     const fetchMyReservations = async () => {
       try {
         setLoading(true);
-        const response = await api.get("reservation/my-reservations");
+        const response = await api.get(
+          "reservation/my-reservations?status=pending,paid",
+        );
         setReservations(response.data.data || []);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -228,7 +230,7 @@ const UserDashboard = () => {
                             </Button>
                           ) : (
                             <span className="text-xs text-muted-foreground italic">
-                              Locked
+                              {/* Locked */}
                             </span>
                           )}
                         </td>

@@ -49,3 +49,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Reservation = Prisma.ReservationModel
+/**
+ * Model Midtrans
+ * 
+ */
+export type Midtrans = Prisma.MidtransModel

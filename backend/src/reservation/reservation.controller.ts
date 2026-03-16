@@ -38,15 +38,20 @@ export class ReservationController {
   @UseGuards(AuthGuard)
   async getMyReservations(
     @User('id') userId: string,
+    @Query('status') status?: string,
   ): Promise<ApiResponse | null> {
-    const reservations =
-      await this.reservationService.getUserReservations(userId);
+    const reservations = await this.reservationService.getUserReservations(
+      userId,
+      status,
+    );
     return successResponse(reservations, 'Berhasil mengambil data reservasi');
   }
 
   @Get('all-reservations')
-  async getAllReservations(): Promise<ApiResponse | null> {
-    const reservations = await this.reservationService.getAllReservations();
+  async getAllReservations(
+    @Query('status') status?: string,
+  ): Promise<ApiResponse | null> {
+    const reservations = await this.reservationService.getAllReservations(status);
     return successResponse(reservations, 'Berhasil mengambil data reservasi');
   }
 

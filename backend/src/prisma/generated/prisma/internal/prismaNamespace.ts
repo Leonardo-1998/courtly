@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.5.0
+ * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.5.0",
+  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
 }
 
 /**
@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Reservation: 'Reservation'
+  Reservation: 'Reservation',
+  Midtrans: 'Midtrans'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "reservation"
+    modelProps: "user" | "reservation" | "midtrans"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Midtrans: {
+      payload: Prisma.$MidtransPayload<ExtArgs>
+      fields: Prisma.MidtransFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MidtransFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MidtransFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        findFirst: {
+          args: Prisma.MidtransFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MidtransFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        findMany: {
+          args: Prisma.MidtransFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>[]
+        }
+        create: {
+          args: Prisma.MidtransCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        createMany: {
+          args: Prisma.MidtransCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MidtransCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>[]
+        }
+        delete: {
+          args: Prisma.MidtransDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        update: {
+          args: Prisma.MidtransUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        deleteMany: {
+          args: Prisma.MidtransDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MidtransUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MidtransUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>[]
+        }
+        upsert: {
+          args: Prisma.MidtransUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MidtransPayload>
+        }
+        aggregate: {
+          args: Prisma.MidtransAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMidtrans>
+        }
+        groupBy: {
+          args: Prisma.MidtransGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MidtransGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MidtransCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MidtransCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -616,10 +691,26 @@ export const ReservationScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  userId: 'userId'
+  status: 'status',
+  userId: 'userId',
+  midtransId: 'midtransId'
 } as const
 
 export type ReservationScalarFieldEnum = (typeof ReservationScalarFieldEnum)[keyof typeof ReservationScalarFieldEnum]
+
+
+export const MidtransScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  grossAmount: 'grossAmount',
+  token: 'token',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted'
+} as const
+
+export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typeof MidtransScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -680,6 +771,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'ReservationStatus'
+ */
+export type EnumReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReservationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReservationStatus[]'
+ */
+export type ListEnumReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReservationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -690,6 +795,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MidtransStatus'
+ */
+export type EnumMidtransStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MidtransStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MidtransStatus[]'
+ */
+export type ListEnumMidtransStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MidtransStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -789,6 +922,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   reservation?: Prisma.ReservationOmit
+  midtrans?: Prisma.MidtransOmit
 }
 
 /* Types for Logging */
