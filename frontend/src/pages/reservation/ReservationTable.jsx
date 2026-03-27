@@ -11,10 +11,10 @@ function StatusBadge({ status }) {
   const isAvailable = status === "Available";
   return (
     <span
-      className={`px-3 py-1 rounded-full text-xs font-semibold border ${
+      className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition-all shadow-sm ${
         isAvailable
-          ? "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800"
-          : "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800"
+          ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/10 dark:text-emerald-400"
+          : "bg-amber-500/10 text-amber-600 border-amber-500/10 dark:text-amber-400 shadow-amber-500/10"
       }`}
     >
       {status}
@@ -40,14 +40,14 @@ export default function ReservationTable({
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md border overflow-hidden">
+    <div className="relative group overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-white/5 backdrop-blur-2xl border-2 border-white/60 dark:border-white/10 shadow-2xl">
       <Table>
-        <TableHeader className="bg-slate-50 dark:bg-slate-900/50">
-          <TableRow>
-            <TableHead className="w-[150px] font-bold">Waktu</TableHead>
-            <TableHead className="text-center font-bold">Lapangan A</TableHead>
-            <TableHead className="text-center font-bold">Lapangan B</TableHead>
-            <TableHead className="text-center font-bold">Lapangan C</TableHead>
+        <TableHeader className="bg-slate-500/5 dark:bg-white/5">
+          <TableRow className="hover:bg-transparent border-b-2 border-slate-100 dark:border-white/5">
+            <TableHead className="w-[180px] font-black text-xs uppercase tracking-widest text-slate-400 py-6 pl-8">Waktu</TableHead>
+            <TableHead className="text-center font-black text-xs uppercase tracking-widest text-slate-400 py-6">Lapangan A</TableHead>
+            <TableHead className="text-center font-black text-xs uppercase tracking-widest text-slate-400 py-6">Lapangan B</TableHead>
+            <TableHead className="text-center font-black text-xs uppercase tracking-widest text-slate-400 py-6 pr-8">Lapangan C</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -55,20 +55,24 @@ export default function ReservationTable({
             return (
               <TableRow
                 key={index}
-                className="hover:bg-slate-100/50 dark:hover:bg-slate-700/50"
+                className="hover:bg-white/40 dark:hover:bg-white/5 transition-colors border-b border-slate-100 dark:border-white/5 group/row"
               >
-                <TableCell className="font-medium">{time}</TableCell>
-                {["Lapangan A", "Lapangan B", "Lapangan C"].map((court) => {
+                <TableCell className="font-black text-slate-600 dark:text-slate-300 py-5 pl-8 text-sm">{time}</TableCell>
+                {["Lapangan A", "Lapangan B", "Lapangan C"].map((court, i) => {
                   const status = getReservationStatus(time, court);
                   return (
                     <TableCell
                       key={court}
-                      className="text-center cursor-pointer"
-                      onClick={() =>
-                        status === "Available" && onCellClick?.(time, court)
-                      }
+                      className={`text-center py-5 ${i === 2 ? 'pr-8' : ''}`}
                     >
-                      <StatusBadge status={status} />
+                      <div 
+                         className={`inline-block transition-all ${status === "Available" ? "cursor-pointer hover:scale-110 active:scale-95" : ""}`}
+                         onClick={() =>
+                           status === "Available" && onCellClick?.(time, court)
+                         }
+                      >
+                        <StatusBadge status={status} />
+                      </div>
                     </TableCell>
                   );
                 })}

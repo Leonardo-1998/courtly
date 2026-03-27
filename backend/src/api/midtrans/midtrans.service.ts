@@ -1,5 +1,5 @@
 import { AddReservationDto } from '@/dto/add.reservation.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import {
@@ -43,7 +43,7 @@ export class MidtransService {
     });
 
     if (!midtransRecord) {
-      throw new Error('Transaction not found');
+      throw new NotFoundException('Transaction not found');
     }
 
     // 1. Update Midtrans Status

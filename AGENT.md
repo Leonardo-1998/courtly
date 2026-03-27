@@ -29,17 +29,18 @@ Server API yang menangani logika bisnis, database, dan integrasi Midtrans.
 | Direktori/File | Kegunaan |
 | :--- | :--- |
 | `src/` | Folder utama kode sumber TypeScript. |
-| ∟ `common/` | Filter, interceptor, dan decorator yang digunakan global. |
-| ∟ `dto/` | Data Transfer Objects untuk validasi request (e.g. Midtrans notification). |
-| ∟ `midtrans/` | Modul integrasi dengan layanan pembayaran Midtrans. |
-| ∟ `prisma/` | Client database yang di-generate dari schema. |
-| ∟ `reservation/` | Logika bisnis utama terkait pemesanan/reservasi. |
-| ∟ `user/` | Manajemen pengguna (Auth, Profile). |
-| ∟ `utils/` | Fungsi pembantu (helper functions). |
+| ∟ `common/` | Filter, interceptor, dan decorator global. |
+| ∟ ∟ `api.response.ts` | Utilitas untuk standarisasi format response API. |
+| ∟ ∟ `guards/` | Proteksi route (e.g. `auth.guard.ts`). |
+| ∟ `dto/` | Data Transfer Objects untuk validasi request (Midtrans, Reservation, Auth). |
+| ∟ `midtrans/` | Modul integrasi payment gateway Midtrans (Controller, Service). |
+| ∟ `prisma/` | Integrasi database via Prisma (Service & Module). |
+| ∟ `reservation/` | Logika bisnis utama terkait pemesanan dan reservasi. |
+| ∟ `user/` | Manajemen pengguna (Registrasi & Login). |
+| ∟ `utils/` | Fungsi pembantu seperti `bcrypt.util.ts` dan `jwt.util.ts`. |
 | `prisma/` | Folder konfigurasi Prisma. |
-| ∟ `schema.prisma` | Definisi tabel database dan relasi (User, Reservation, Midtrans). |
+| ∟ `schema.prisma` | Definisi tabel database (User, Reservation, Midtrans). |
 | `.env` | Konfigurasi variabel lingkungan (DB URL, Midtrans Keys). |
-| `nest-cli.json` | Konfigurasi CLI NestJS. |
 
 ---
 
@@ -49,13 +50,15 @@ Aplikasi web client yang interaktif.
 | Direktori/File | Kegunaan |
 | :--- | :--- |
 | `src/` | Folder utama kode sumber React. |
-| ∟ `assets/` | File statis seperti gambar atau icon. |
-| ∟ `components/` | Komponen UI yang reusable (menggunakan Shadcn/UI). |
-| ∟ `lib/` | Konfigurasi library seperti Axios atau Utils. |
-| ∟ `pages/` | Komponen halaman utama aplikasi. |
+| ∟ `components/` | Komponen UI yang dikelompokkan: |
+| ∟ ∟ `auth/` | Komponen terkait autentikasi (e.g. ProtectedRoute). |
+| ∟ ∟ `layout/` | Komponen struktur halaman (e.g. Navbar). |
+| ∟ ∟ `ui/` | Komponen dasar dari Shadcn/UI (Button, Input, Form, dll). |
+| ∟ `lib/` | Konfigurasi library seperti `axios.js` dan helper `utils.js`. |
+| ∟ `pages/` | Halaman utama yang diorganisir per fitur: |
+| ∟ ∟ `auth/` | Halaman Login dan Register. |
+| ∟ ∟ `reservation/` | Halaman Dashboard User, List Reservasi, dan Form Tambah. |
 | `public/` | Asset publik yang diakses langsung via URL. |
-| `components.json` | Konfigurasi untuk Shadcn/UI. |
-| `vite.config.js` | Konfigurasi build tool Vite. |
 | `tailwind.config.js` | Konfigurasi styling CSS. |
 
 ---
@@ -64,12 +67,12 @@ Aplikasi web client yang interaktif.
 
 ### Database Schema (`backend/prisma/schema.prisma`)
 Berisi 3 model utama:
-- `User`: Menyimpan informasi akun pengguna.
+- `User`: Akun pengguna.
 - `Reservation`: Detail pesanan (waktu, lokasi, harga, status).
-- `Midtrans`: Log transaksi dan token pembayaran.
+- `Midtrans`: Log transaksi dan sinkronisasi status pembayaran.
 
 ### Panduan UUID (`backend/UUID_GUIDE.md`)
-Dokumentasi spesifik mengenai penggunaan UUID dalam proyek untuk menjamin keunikan ID di seluruh sistem.
+Dokumentasi mengenai standarisasi penggunaan UUID sebagai primary key.
 
 ---
 
@@ -79,21 +82,22 @@ Dokumentasi spesifik mengenai penggunaan UUID dalam proyek untuk menjamin keunik
 ```bash
 cd backend
 npm install
-npm run start:dev   # Menjalankan server dalam mode watch
-npx prisma generate # Men-generate client prisma
-npx prisma db push  # Sinkronisasi schema ke database
+npm run start:dev   # Jalankan server mode dev
+npx prisma generate # Update prisma client
+npx prisma db push  # Update schema database
 ```
 
 ### Frontend
 ```bash
 cd frontend
 npm install
-npm run dev         # Menjalankan aplikasi web secara lokal
+npm run dev         # Jalankan dev server Vite
 ```
 
 ---
 
 ## 💡 Catatan Penting untuk Pengembangan
+- **API Standard**: Gunakan helper di `common/api.response.ts` untuk setiap response.
 - **Validasi**: Gunakan `class-validator` di backend dan `zod` di frontend.
-- **Styling**: Selalu gunakan utility classes dari Tailwind CSS untuk konsistensi.
-- **Pembayaran**: Pastikan `.env` di backend terisi dengan `MIDTRANS_SERVER_KEY` yang valid untuk testing.
+- **Styling**: Manfaatkan komponen Shadcn/UI dan kustomisasi via Tailwind.
+- **Pembayaran**: Endpoint Midtrans notification ada di `/midtrans/notification`.

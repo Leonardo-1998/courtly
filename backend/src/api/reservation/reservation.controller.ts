@@ -47,11 +47,27 @@ export class ReservationController {
     return successResponse(reservations, 'Berhasil mengambil data reservasi');
   }
 
+  @Get('my-history')
+  @UseGuards(AuthGuard)
+  async getMyHistory(
+    @User('id') userId: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ): Promise<ApiResponse | null> {
+    const history = await this.reservationService.getUserReservationHistory(
+      userId,
+      Number(page),
+      Number(limit),
+    );
+    return successResponse(history, 'Berhasil mengambil riwayat reservasi');
+  }
+
   @Get('all-reservations')
   async getAllReservations(
     @Query('status') status?: string,
   ): Promise<ApiResponse | null> {
-    const reservations = await this.reservationService.getAllReservations(status);
+    const reservations =
+      await this.reservationService.getAllReservations(status);
     return successResponse(reservations, 'Berhasil mengambil data reservasi');
   }
 
@@ -70,7 +86,9 @@ export class ReservationController {
 
   @Delete(':id')
   @UseGuards(AuthGuard)
-  async cancelReservation(@Param('id') id: string): Promise<ApiResponse | null> {
+  async cancelReservation(
+    @Param('id') id: string,
+  ): Promise<ApiResponse | null> {
     const reservation = await this.reservationService.cancelReservation(id);
     return successResponse(reservation, 'Berhasil membatalkan reservasi');
   }

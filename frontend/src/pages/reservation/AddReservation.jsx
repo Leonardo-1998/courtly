@@ -15,6 +15,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import api from "@/lib/axios";
+import { Bounce, toast } from "react-toastify";
+import { Calendar, Zap } from "lucide-react";
 
 const timeOptions = [
   "09.00",
@@ -141,9 +143,68 @@ export default function AddReservation({
     try {
       const response = await api.post("/reservation/add", values);
 
-      window.snap.pay(response.data.data);
+      window.snap.pay(response.data.data, {
+        onSuccess: function (result) {
+          /* You may add your own implementation here */
+          console.log("payment success!");
+          console.log(result);
+          toast.success("Pembayaran Berhasil!", {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "colored",
+            transition: Bounce,
+          });
+          navigate("/dashboard/riwayat");
+        },
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          console.log("payment pending!");
+          console.log(result);
+          toast.info("Menunggu Pembayaran...", {
+            position: "top-center",
+            autoClose: 5000,
+            theme: "colored",
+            transition: Bounce,
+          });
+          navigate("/dashboard/riwayat");
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+          console.log("payment error!");
+          console.log(result);
+          toast.error("Pembayaran Gagal!", {
+            position: "top-center",
+            autoClose: 5000,
+            theme: "colored",
+            transition: Bounce,
+          });
+          navigate("/dashboard/riwayat");
+        },
+        onClose: function () {
+          /* You may add your own implementation here */
+          toast.info("Anda menutup jendela pembayaran", {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "colored",
+            transition: Bounce,
+          });
+          navigate("/dashboard/riwayat");
+        },
+      });
     } catch (error) {
       console.error(error);
+
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
     }
   };
 
@@ -163,125 +224,140 @@ export default function AddReservation({
   }, []);
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-transparent p-4">
-      <Card className="w-full max-w-md shadow-2xl">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Tambah Reservasi</CardTitle>
-          <CardDescription>
-            Isi detail reservasi Anda di bawah ini.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="location">Lokasi</Label>
-              <Input
-                id="location"
-                {...register("location")}
-                readOnly
-                className="bg-slate-100 dark:bg-slate-800 cursor-not-allowed"
-              />
+    <div className="flex flex-1 items-center justify-center p-4 relative overflow-hidden min-h-screen">
+      <div className="w-full max-w-md relative z-10 group">
+        {/* Glassmorphism Card Background */}
+        <div className="absolute inset-0 bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border-2 border-white/60 dark:border-white/10 shadow-2xl z-0 transition-all duration-500 group-hover:shadow-primary/10"></div>
+        
+        <Card className="relative z-10 bg-transparent border-none shadow-none overflow-hidden rounded-[2.5rem]">
+          <CardHeader className="space-y-2 pt-10 pb-6 text-center">
+             <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-2 shadow-inner">
+               <Calendar className="h-8 w-8 text-primary" />
             </div>
+            <CardTitle className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
+              Tambah Reservasi
+            </CardTitle>
+            <CardDescription className="text-slate-500 dark:text-slate-400 font-medium">
+              Konfirmasi jadwal pilihan Anda di bawah ini
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-8 pb-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Lokasi</Label>
+                  <Input
+                    id="location"
+                    {...register("location")}
+                    readOnly
+                    className="h-12 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50 cursor-not-allowed font-bold shadow-inner"
+                  />
+                </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="date">Tanggal</Label>
-              <Input
-                id="date"
-                type="date"
-                {...register("date")}
-                readOnly
-                className="bg-slate-100 dark:bg-slate-800 cursor-not-allowed"
-              />
-            </div>
+                <div className="space-y-2">
+                  <Label htmlFor="date" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tanggal</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    {...register("date")}
+                    readOnly
+                    className="h-12 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50 cursor-not-allowed font-bold shadow-inner"
+                  />
+                </div>
+              </div>
 
-            <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="startTime" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Jam Mulai</Label>
+                  <select
+                    id="startTime"
+                    {...register("startTime")}
+                    className="flex h-12 w-full rounded-2xl border-2 border-slate-200/50 dark:border-white/5 bg-white/50 dark:bg-slate-800/50 px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary shadow-inner"
+                  >
+                    <option value="">-- Mulai --</option>
+                    {timeOptions.slice(0, -1).map((time) => (
+                      <option key={time} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.startTime && (
+                    <p className="text-[10px] font-bold text-red-500 ml-1">
+                      {errors.startTime.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="endTime" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Jam Selesai</Label>
+                  <select
+                    id="endTime"
+                    {...register("endTime")}
+                    className="flex h-12 w-full rounded-2xl border-2 border-slate-200/50 dark:border-white/5 bg-white/50 dark:bg-slate-800/50 px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary shadow-inner"
+                  >
+                    <option value="">-- Selesai --</option>
+                    {timeOptions.slice(1).map((time) => (
+                      <option key={time} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.endTime && (
+                    <p className="text-[10px] font-bold text-red-500 ml-1">
+                      {errors.endTime.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
               <div className="space-y-2">
-                <Label htmlFor="startTime">Jam Mulai</Label>
+                <Label htmlFor="court" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Lapangan</Label>
                 <select
-                  id="startTime"
-                  {...register("startTime")}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="court"
+                  {...register("court")}
+                  className="flex h-12 w-full rounded-2xl border-2 border-slate-200/50 dark:border-white/5 bg-white/50 dark:bg-slate-800/50 px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary shadow-inner"
                 >
-                  <option value="">-- Mulai --</option>
-                  {timeOptions.slice(0, -1).map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
+                  <option value="">-- Pilih Lapangan --</option>
+                  <option value="Lapangan A">Lapangan A</option>
+                  <option value="Lapangan B">Lapangan B</option>
+                  <option value="Lapangan C">Lapangan C</option>
                 </select>
-                {errors.startTime && (
-                  <p className="text-xs font-medium text-destructive">
-                    {errors.startTime.message}
+                {errors.court && (
+                  <p className="text-[10px] font-bold text-red-500 ml-1">
+                    {errors.court.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="endTime">Jam Selesai</Label>
-                <select
-                  id="endTime"
-                  {...register("endTime")}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <option value="">-- Selesai --</option>
-                  {timeOptions.slice(1).map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
-                {errors.endTime && (
-                  <p className="text-xs font-medium text-destructive">
-                    {errors.endTime.message}
-                  </p>
-                )}
+              <div className="p-6 rounded-3xl bg-primary/5 border border-primary/10 space-y-2">
+                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                   <span>ESTIMASI BIAYA</span>
+                   <Zap className="h-3 w-3 text-primary" />
+                </div>
+                <Input
+                  id="price"
+                  {...register("price")}
+                  readOnly
+                  className="bg-transparent border-none p-0 h-auto text-3xl font-black text-primary cursor-default shadow-none focus-visible:ring-0"
+                />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="court">Lapangan</Label>
-              <select
-                id="court"
-                {...register("court")}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <option value="">-- Pilih Lapangan --</option>
-                <option value="Lapangan A">Lapangan A</option>
-                <option value="Lapangan B">Lapangan B</option>
-                <option value="Lapangan C">Lapangan C</option>
-              </select>
-              {errors.court && (
-                <p className="text-sm font-medium text-destructive">
-                  {errors.court.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="price">Harga</Label>
-              <Input
-                id="price"
-                {...register("price")}
-                readOnly
-                className="bg-slate-100 dark:bg-slate-800 cursor-not-allowed font-semibold text-indigo-600 dark:text-indigo-400"
-              />
-            </div>
-
-            <Button type="submit" className="w-full h-11 text-lg">
-              Konfirmasi Reservasi
+              <Button type="submit" className="w-full h-14 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95">
+                Konfirmasi Reservasi
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter className="justify-center pb-10">
+            <Button
+              variant="link"
+              onClick={onClose || (() => navigate("/reservasi"))}
+              className="text-slate-400 font-black uppercase tracking-widest text-[10px] hover:text-primary transition-colors"
+            >
+              Kembali ke Jadwal
             </Button>
-          </form>
-        </CardContent>
-        <CardFooter className="justify-center">
-          <Button
-            variant="link"
-            onClick={onClose || (() => navigate("/reservasi"))}
-            className="text-muted-foreground"
-          >
-            Batal
-          </Button>
-        </CardFooter>
-      </Card>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }

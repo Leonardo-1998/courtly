@@ -1,9 +1,9 @@
 import { AddReservationDto } from '@/dto/add.reservation.dto';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 import { PrismaService } from 'src/prisma/prisma.service';
-import { MidtransService } from 'src/midtrans/midtrans.service';
+import { MidtransService } from '@/api/midtrans/midtrans.service';
 import { ReservationStatus } from '@/prisma/generated/prisma/enums';
 
 @Injectable()
@@ -17,6 +17,49 @@ export class ReservationService {
     const reservationId = randomUUID();
     const total = parseInt(addReservationDto.price.replace(/\D/g, ''), 10);
     const orderId = `ORDER-${reservationId}`;
+
+    const existingReservation = await this.prisma.reservation.findFirst({
+      where: {
+        date: new Date(addReservationDto.date),
+        location: addReservationDto.location,
+        court: addReservationDto.court,
+        isDeleted: false,
+        OR: [
+          {
+            AND: [
+              {
+                startTime: {
+                  lt: addReservationDto.endTime,
+                },
+              },
+              {
+                startTime: {
+                  gte: addReservationDto.startTime,
+                },
+              },
+            ],
+          },
+          {
+            AND: [
+              {
+                endTime: {
+                  lt: addReservationDto.endTime,
+                },
+              },
+              {
+                endTime: {
+                  gte: addReservationDto.startTime,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    if (existingReservation) {
+      throw new ConflictException('Reservasi sudah ada');
+    }
 
     const transactionToken = await this.midtransService.payment(
       addReservationDto,
@@ -51,7 +94,9 @@ export class ReservationService {
   }
 
   async getUserReservations(userId: string, status?: string) {
-    const statuses = status ? status.split(',') : undefined;
+    const statuses = status
+      ? status.split(',').map((status) => status.toUpperCase())
+      : undefined;
     return this.prisma.reservation.findMany({
       where: {
         userId,
@@ -60,14 +105,60 @@ export class ReservationService {
           status: { in: statuses as ReservationStatus[] },
         }),
       },
+      include: {
+        midtrans: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
     });
   }
 
+  async getUserReservationHistory(
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+  ) {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.prisma.reservation.findMany({
+        where: {
+          userId,
+          isDeleted: false,
+        },
+        include: {
+          midtrans: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.reservation.count({
+        where: {
+          userId,
+          isDeleted: false,
+        },
+      }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
   async getAllReservations(status?: string) {
-    const statuses = status ? status.split(',') : undefined;
+    const statuses = status
+      ? status.split(',').map((status) => status.toUpperCase())
+      : undefined;
     return this.prisma.reservation.findMany({
       where: {
         isDeleted: false,
@@ -97,9 +188,9 @@ export class ReservationService {
   async cancelReservation(id: string) {
     return this.prisma.reservation.update({
       where: { id },
-      data: { 
+      data: {
         isDeleted: true,
-        status: ReservationStatus.CANCELLED
+        status: ReservationStatus.CANCELLED,
       },
     });
   }

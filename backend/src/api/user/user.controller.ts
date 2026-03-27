@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
 import { UserService } from './user.service';
-import { LoginDto } from '../dto/login.dto';
-import { RegisterDto } from '../dto/register.dto';
+import { LoginDto } from '../../dto/login.dto';
+import { RegisterDto } from '../../dto/register.dto';
 import { ApiResponse } from '@/common/response.interface';
 import { successResponse } from '@/common/api.response';
 
