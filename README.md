@@ -10,28 +10,32 @@ A full-stack, end-to-end sports facility reservation system designed for seamles
 
 ## ✨ Key Features
 
+- **Modern Glassmorphism UI**: A stunning, premium interface with dynamic background blobs, frosted glass effects, and responsive layout.
 - **Secure Reservation System**: Real-time booking with specific time slots and court selection.
-- **Midtrans Payment Integration**: Integrated with Midtrans Snap and Webhooks for automated payment status updates (Settlement, Pending, Expired, etc.).
-- **User Authentication**: Secure user registration and login using JWT and password hashing.
-- **Reservation Management**: Track booking history and status through a centralized dashboard.
-- **Relational Data Mapping**: Comprehensive database schema designed for scalability using Prisma ORM.
+- **Reservation History & Pagination**: A dedicated dashboard for tracking past and upcoming bookings with efficient pagination (5, 10, or 20 items per page).
+- **Midtrans Payment Integration**: Seamlessly integrated with Midtrans Snap for pop-up payments and Webhooks for automated status updates (Settlement, Pending, Expired, etc.).
+- **User Authentication**: Secure user registration and login using JWT and bcrypt password hashing.
+- **Relational Data Mapping**: Scalable database schema using Prisma ORM with UUID-based primary keys.
 
 ---
 
 ## 🛠️ Technology Stack
 
 ### **Backend**
-- **Framework**: [NestJS](https://nestjs.com/) (Progressive Node.js framework)
+
+- **Framework**: [NestJS](https://nestjs.co
+  m/) (Progressive Node.js framework)
 - **ORM**: [Prisma](https://www.prisma.io/)
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **Authentication**: JWT (JSON Web Tokens) & Bcrypt
-- **API Documentation**: Implementation of RESTful architecture
+- **Payment**: [Midtrans SDK](https://midtrans.com/)
 
 ### **Frontend**
+
 - **Library**: [React.js](https://reactjs.org/) (Vite)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (Glassmorphism design)
 - **UI Components**: [Shadcn/UI](https://ui.shadcn.com/)
-- **Form Handling**: React Hook Form & Zod (Schema Validation)
+- **Validation**: React Hook Form & Zod
 
 ---
 
@@ -55,11 +59,13 @@ Reservation/
 ## 🔧 Installation & Setup
 
 ### **Prerequisites**
+
 - Node.js (v18+)
 - PostgreSQL Database
 - Midtrans Sandbox Account
 
 ### **1. Backend Configuration**
+
 ```bash
 cd backend
 npm install
@@ -70,6 +76,7 @@ npm run start:dev
 ```
 
 ### **2. Frontend Configuration**
+
 ```bash
 cd frontend
 npm install
@@ -79,6 +86,7 @@ npm run dev
 ---
 
 ## 🔒 Security Measures
+
 - **Password Hashing**: Implemented using `bcrypt` to ensure user data protection.
 - **Validation**: Strict request validation using `class-validator` (Backend) and `Zod` (Frontend).
 - **Environment Safety**: Sensitive keys (DB URL, Midtrans Keys) are managed through environment variables.
@@ -86,7 +94,9 @@ npm run dev
 ---
 
 ## 👤 Author
-- **Leonardo** - *Full Stack Developer*
+
+- **Leonardo** - _Full Stack Developer_
 
 ---
-*This documentation was generated for professional portfolio and developer reference purposes.*
+
+_This documentation was generated for professional portfolio and developer reference purposes._

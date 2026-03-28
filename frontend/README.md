@@ -1,16 +1,53 @@
-# React + Vite
+# Courtly - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend of Courtly is a modern, high-performance React application built with Vite and Tailwind CSS. It features a premium Glassmorphism design system.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Modern UI/UX**: Glassmorphism aesthetic with dynamic backgrounds and smooth transitions.
+- **Reservation Management**: Add new bookings, view active reservations, and check history.
+- **Midtrans Integration**: Snap pop-up for secure and seamless payments.
+- **Paginasi**: Efficiently handle large sets of reservation history.
+- **Protected Routes**: Secure access to user dashboards and booking forms.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React.js (Vite)
+- **Styling**: Tailwind CSS
+- **Components**: Shadcn/UI
+- **Icons**: Lucide React
+- **Validation**: React Hook Form + Zod
+- **Networking**: Axios
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd frontend
+npm install
+```
+
+## 🔧 Environment Variables
+
+Create a `.env` file in the `frontend` root:
+
+```env
+VITE_API_URL=http://localhost:3000
+VITE_MIDTRANS_CLIENT_KEY=your_client_key
+```
+
+## 🏃 Running the Application
+
+```bash
+# Development mode
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## 📂 Key Directory Structure
+
+- `src/components`: Reusable UI components.
+- `src/pages`: Feature-based route components.
+- `src/lib`: API configuration and utility helpers.
+- `src/hooks`: Custom React hooks for data fetching and state.

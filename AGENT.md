@@ -57,9 +57,14 @@ Aplikasi web client yang interaktif.
 | ∟ `lib/` | Konfigurasi library seperti `axios.js` dan helper `utils.js`. |
 | ∟ `pages/` | Halaman utama yang diorganisir per fitur: |
 | ∟ ∟ `auth/` | Halaman Login dan Register. |
-| ∟ ∟ `reservation/` | Halaman Dashboard User, List Reservasi, dan Form Tambah. |
-| `public/` | Asset publik yang diakses langsung via URL. |
-| `tailwind.config.js` | Konfigurasi styling CSS. |
+| ∟ ∟ `reservation/` | Dashboard, List Reservasi, History, dan Form Tambah. |
+| ∟ ∟ ∟ `AddReservation.jsx` | Form pembuatan booking baru. |
+| ∟ ∟ ∟ `ReservationHistory.jsx` | Halaman riwayat pemesanan dengan paginasi. |
+| ∟ ∟ ∟ `ReservationList.jsx` | Tampilan daftar reservasi aktif. |
+| ∟ ∟ ∟ `ReservationTable.jsx` | Komponen tabel reusable untuk reservasi. |
+| ∟ ∟ ∟ `UserDashboard.jsx` | Ringkasan akun dan status booking. |
+| `public/` | Asset publik (gambar, icon, dll). |
+| `tailwind.config.js` | Konfigurasi styling CSS (termasuk variabel glassmorphism). |
 
 ---
 
@@ -99,5 +104,6 @@ npm run dev         # Jalankan dev server Vite
 ## 💡 Catatan Penting untuk Pengembangan
 - **API Standard**: Gunakan helper di `common/api.response.ts` untuk setiap response.
 - **Validasi**: Gunakan `class-validator` di backend dan `zod` di frontend.
-- **Styling**: Manfaatkan komponen Shadcn/UI dan kustomisasi via Tailwind.
+- **Styling**: Gunakan Glassmorphism design system (vibrant colors, dark mode support, frosted glass cards).
+- **Paginasi**: Backend mendukung parameter `page`, `limit`, `skip`, dan `take`. Metadata dikembalikan dalam field `meta`.
 - **Pembayaran**: Endpoint Midtrans notification ada di `/midtrans/notification`.
