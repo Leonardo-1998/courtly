@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { MidtransService } from '@/api/midtrans/midtrans.service';
 import { ReservationStatus } from '@/prisma/generated/prisma/enums';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class ReservationService {
@@ -108,9 +109,14 @@ export class ReservationService {
       include: {
         midtrans: true,
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: [
+        {
+          date: 'asc',
+        },
+        {
+          startTime: 'asc',
+        },
+      ],
     });
   }
 
@@ -193,5 +199,42 @@ export class ReservationService {
         status: ReservationStatus.CANCELLED,
       },
     });
+  }
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async handleExpiredReservations() {
+    const now = new Date();
+
+    const pendingReservations = await this.prisma.reservation.findMany({
+      where: {
+        status: ReservationStatus.PENDING,
+        isDeleted: false,
+      },
+    });
+
+    const expiredIds: string[] = [];
+
+    for (const res of pendingReservations) {
+      const [hour, minute] = res.startTime.split('.').map(Number);
+      const reservationStart = new Date(res.date);
+      reservationStart.setHours(hour, minute, 0, 0);
+
+      // Jika waktu sekarang sudah melewati waktu mulai reservasi
+      if (now > reservationStart) {
+        expiredIds.push(res.id);
+      }
+    }
+
+    if (expiredIds.length > 0) {
+      await this.prisma.reservation.updateMany({
+        where: { id: { in: expiredIds } },
+        data: {
+          status: ReservationStatus.CANCELLED,
+        },
+      });
+      console.log(
+        `[Cron] ${expiredIds.length} reservasi dihanguskan karena melewati jadwal.`,
+      );
+    }
   }
 }

@@ -4,6 +4,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ReservationModule } from './api/reservation/reservation.module';
 import { MidtransModule } from './api/midtrans/midtrans.module';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
   ],
 })
 export class AppModule {}
