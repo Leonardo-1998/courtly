@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoginDto } from '../../dto/login.dto';
 import { RegisterDto } from '../../dto/register.dto';
 import { ApiResponse } from '@/common/response.interface';
 import { successResponse } from '@/common/api.response';
+import { AuthGuard } from '@/common/guards/auth.guard';
+import { User } from '@/common/decorators/user.decorator';
 
 @Controller('user')
 export class UserController {
@@ -23,5 +25,13 @@ export class UserController {
     const register = await this.userService.register(registerDto);
 
     return successResponse(register, 'Berhasil Register');
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  async getMe(@User() user: any): Promise<ApiResponse | null> {
+    const userProfile = await this.userService.getProfile(user.id);
+
+    return successResponse(userProfile, 'Berhasil Ambil Profile');
   }
 }

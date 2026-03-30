@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Button } from "@/components/ui/button";
+import api from "@/lib/axios";
 
 function NavLink({ to, label }) {
   return (
@@ -25,6 +26,7 @@ export default function Navbar() {
       try {
         const decoded = jwtDecode(token);
         setUserData(decoded);
+        fetchProfile();
       } catch (error) {
         console.error("Invalid token", error);
         localStorage.removeItem("accessToken");
@@ -34,6 +36,23 @@ export default function Navbar() {
       setUserData(null);
     }
   }, [token]);
+
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get("/user/me");
+      setUserData(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch profile", error);
+    }
+  };
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -46,7 +65,7 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
           <div className="p-2.5 bg-primary rounded-2xl shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-             <svg
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="-11.5 -10.23174 23 20.46348"
               className="h-6 w-6 text-white"
@@ -79,9 +98,42 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {userData ? (
             <div className="flex items-center gap-6">
+              {/* Saldo Display */}
+              <div className="hidden sm:flex items-center gap-3 px-4 py-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl">
+                <div className="p-1.5 bg-primary/10 rounded-lg">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-primary"
+                  >
+                    <rect width="20" height="14" x="2" y="5" rx="2" />
+                    <line x1="2" x2="22" y1="10" y2="10" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black uppercase tracking-tighter text-slate-400 leading-none mb-0.5">
+                    Saldo Anda
+                  </span>
+                  <span className="text-xs font-black text-slate-900 dark:text-white leading-none">
+                    {userData ? formatCurrency(userData.saldo) : "..."}
+                  </span>
+                </div>
+              </div>
+
               <div className="hidden lg:flex flex-col items-end">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Selamat Datang</span>
-                <span className="text-sm font-black text-slate-900 dark:text-white">{userData.username}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                  Selamat Datang
+                </span>
+                <span className="text-sm font-black text-slate-900 dark:text-white">
+                  {userData.username}
+                </span>
               </div>
               <Button
                 variant="ghost"
@@ -93,10 +145,17 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <Button asChild variant="ghost" className="h-11 rounded-xl px-6 font-black uppercase tracking-widest text-xs">
+              <Button
+                asChild
+                variant="ghost"
+                className="h-11 rounded-xl px-6 font-black uppercase tracking-widest text-xs"
+              >
                 <Link to="/login">Login</Link>
               </Button>
-              <Button asChild className="h-11 rounded-xl px-6 font-black uppercase tracking-widest text-xs shadow-lg shadow-primary/20 transition-all active:scale-95">
+              <Button
+                asChild
+                className="h-11 rounded-xl px-6 font-black uppercase tracking-widest text-xs shadow-lg shadow-primary/20 transition-all active:scale-95"
+              >
                 <Link to="/register">Daftar</Link>
               </Button>
             </div>

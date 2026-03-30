@@ -441,14 +441,6 @@ export type MidtransUpdateOneRequiredWithoutReservationNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MidtransUpdateToOneWithWhereWithoutReservationInput, Prisma.MidtransUpdateWithoutReservationInput>, Prisma.MidtransUncheckedUpdateWithoutReservationInput>
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumMidtransStatusFieldUpdateOperationsInput = {
   set?: $Enums.MidtransStatus
 }

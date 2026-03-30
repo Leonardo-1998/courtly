@@ -69,4 +69,23 @@ export class UserService {
     });
     return createUser;
   }
+
+  async getProfile(
+    userId: string,
+  ): Promise<{ saldo: number; username: string } | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new BadRequestException('User tidak ditemukan');
+    }
+
+    return {
+      saldo: user.saldo,
+      username: user.username,
+    };
+  }
 }
