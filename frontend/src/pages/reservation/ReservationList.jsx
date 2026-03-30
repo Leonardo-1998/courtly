@@ -27,6 +27,23 @@ export default function ReservationList() {
   const [prefillData, setPrefillData] = useState({ time: "", court: "" });
   const [reservations, setReservations] = useState([]);
 
+  const checkIsPast = (dateString, timeString) => {
+    const today = new Date();
+
+    if (timeString) {
+      let [hours, minutes] = timeString.split(".");
+      hours = parseInt(hours);
+      minutes = parseInt(minutes);
+      today.setHours(hours, minutes, 0, 0);
+    } else {
+      today.setHours(0, 0, 0, 0);
+    }
+
+    const selectedDate = new Date(dateString);
+
+    return selectedDate < today;
+  };
+
   const handleAddReservation = () => {
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
@@ -62,6 +79,7 @@ export default function ReservationList() {
         selectedLocation={selectedLocation}
         initialTime={prefillData.time}
         initialCourt={prefillData.court}
+        checkIsPast={checkIsPast}
         onClose={() => {
           setView("list");
           setPrefillData({ time: "", court: "" });
@@ -109,8 +127,8 @@ export default function ReservationList() {
                 className="bg-white/50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-white/5 rounded-2xl px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary h-12 shadow-inner"
               />
             </div>
-            <Button 
-              onClick={handleAddReservation} 
+            <Button
+              onClick={handleAddReservation}
               className="mt-auto h-12 rounded-2xl px-8 font-black uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95"
             >
               Cek Ketersediaan
@@ -122,6 +140,8 @@ export default function ReservationList() {
           reservations={reservations}
           scheduleTime={scheduleTime}
           onCellClick={handleCellClick}
+          checkIsPast={checkIsPast}
+          selectedDate={selectedDate}
         />
       </div>
     </div>

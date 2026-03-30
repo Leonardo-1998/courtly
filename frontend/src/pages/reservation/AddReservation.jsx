@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -58,8 +58,10 @@ export default function AddReservation({
   selectedLocation,
   initialTime = "",
   initialCourt = "",
+  checkIsPast,
 }) {
   const navigate = useNavigate();
+  const [isPast, setIsPast] = useState(false);
   const fixedPricePerPool = 50000;
 
   // Split initialTime (e.g. "09.00 - 10.00") if provided
@@ -92,6 +94,7 @@ export default function AddReservation({
   useEffect(() => {
     const startIndex = timeOptions.indexOf(watchedStartTime);
     const endIndex = timeOptions.indexOf(watchedEndTime);
+    setIsPast(checkIsPast(selectedDate, watchedStartTime));
 
     // 1. Auto-fill jam selesai jika kosong atau tidak valid
     if (watchedStartTime && startIndex !== -1) {
@@ -228,11 +231,11 @@ export default function AddReservation({
       <div className="w-full max-w-md relative z-10 group">
         {/* Glassmorphism Card Background */}
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border-2 border-white/60 dark:border-white/10 shadow-2xl z-0 transition-all duration-500 group-hover:shadow-primary/10"></div>
-        
+
         <Card className="relative z-10 bg-transparent border-none shadow-none overflow-hidden rounded-[2.5rem]">
           <CardHeader className="space-y-2 pt-10 pb-6 text-center">
-             <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-2 shadow-inner">
-               <Calendar className="h-8 w-8 text-primary" />
+            <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-2 shadow-inner">
+              <Calendar className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
               Tambah Reservasi
@@ -245,7 +248,12 @@ export default function AddReservation({
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="location" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Lokasi</Label>
+                  <Label
+                    htmlFor="location"
+                    className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                  >
+                    Lokasi
+                  </Label>
                   <Input
                     id="location"
                     {...register("location")}
@@ -255,7 +263,12 @@ export default function AddReservation({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="date" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tanggal</Label>
+                  <Label
+                    htmlFor="date"
+                    className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                  >
+                    Tanggal
+                  </Label>
                   <Input
                     id="date"
                     type="date"
@@ -268,7 +281,12 @@ export default function AddReservation({
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="startTime" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Jam Mulai</Label>
+                  <Label
+                    htmlFor="startTime"
+                    className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                  >
+                    Jam Mulai
+                  </Label>
                   <select
                     id="startTime"
                     {...register("startTime")}
@@ -289,7 +307,12 @@ export default function AddReservation({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="endTime" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Jam Selesai</Label>
+                  <Label
+                    htmlFor="endTime"
+                    className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                  >
+                    Jam Selesai
+                  </Label>
                   <select
                     id="endTime"
                     {...register("endTime")}
@@ -311,7 +334,12 @@ export default function AddReservation({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="court" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Lapangan</Label>
+                <Label
+                  htmlFor="court"
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                >
+                  Lapangan
+                </Label>
                 <select
                   id="court"
                   {...register("court")}
@@ -331,8 +359,8 @@ export default function AddReservation({
 
               <div className="p-6 rounded-3xl bg-primary/5 border border-primary/10 space-y-2">
                 <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                   <span>ESTIMASI BIAYA</span>
-                   <Zap className="h-3 w-3 text-primary" />
+                  <span>ESTIMASI BIAYA</span>
+                  <Zap className="h-3 w-3 text-primary" />
                 </div>
                 <Input
                   id="price"
@@ -342,8 +370,12 @@ export default function AddReservation({
                 />
               </div>
 
-              <Button type="submit" className="w-full h-14 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95">
-                Konfirmasi Reservasi
+              <Button
+                type="submit"
+                disabled={isPast}
+                className="w-full h-14 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isPast ? "Tidak Bisa Reservasi" : "Konfirmasi Reservasi"}
               </Button>
             </form>
           </CardContent>
