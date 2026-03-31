@@ -83,6 +83,7 @@ export default function ReservationTable({
                   const status = getReservationStatus(time, court);
                   const startTime = time.split(" - ")[0];
                   const isPast = checkIsPast(selectedDate, startTime);
+
                   return (
                     <TableCell
                       key={court}

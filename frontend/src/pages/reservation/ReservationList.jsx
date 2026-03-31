@@ -28,20 +28,20 @@ export default function ReservationList() {
   const [reservations, setReservations] = useState([]);
 
   const checkIsPast = (dateString, timeString) => {
-    const today = new Date();
+    let selectedTime = new Date(dateString);
 
     if (timeString) {
       let [hours, minutes] = timeString.split(".");
       hours = parseInt(hours);
       minutes = parseInt(minutes);
-      today.setHours(hours, minutes, 0, 0);
+      selectedTime.setHours(hours, minutes, 0, 0);
     } else {
-      today.setHours(0, 0, 0, 0);
+      selectedTime.setHours(0, 0, 0, 0);
     }
 
-    const selectedDate = new Date(dateString);
+    const now = new Date();
 
-    return selectedDate < today;
+    return selectedTime < now;
   };
 
   const handleAddReservation = () => {
