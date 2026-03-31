@@ -38,6 +38,9 @@ const reservationSchema = z
     endTime: z.string().min(1, { message: "Pilih jam selesai" }),
     court: z.string().min(1, { message: "Pilih lapangan" }),
     price: z.string(),
+    paymentMethod: z.enum(["MIDTRANS", "SALDO"], {
+      required_error: "Pilih metode pembayaran",
+    }),
   })
   .superRefine((data, ctx) => {
     const startIdx = timeOptions.indexOf(data.startTime);
@@ -62,6 +65,7 @@ export default function AddReservation({
 }) {
   const navigate = useNavigate();
   const [isPast, setIsPast] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
   const fixedPricePerPool = 50000;
 
   // Split initialTime (e.g. "09.00 - 10.00") if provided
@@ -84,8 +88,31 @@ export default function AddReservation({
       endTime: prefillEnd,
       court: initialCourt,
       price: "Rp 50.000",
+      paymentMethod: "MIDTRANS",
     },
   });
+
+  const watchedPaymentMethod = watch("paymentMethod");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get("/user/me");
+        setUserProfile(response.data.data);
+      } catch (error) {
+        console.error("Failed to fetch profile", error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
 
   const watchedStartTime = watch("startTime");
   const watchedEndTime = watch("endTime");
@@ -146,6 +173,19 @@ export default function AddReservation({
     try {
       const response = await api.post("/reservation/add", values);
 
+      // Jika bayar pakai saldo, langsung sukses
+      if (values.paymentMethod === "SALDO") {
+        toast.success("Reservasi Berhasil Menggunakan Saldo!", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "colored",
+          transition: Bounce,
+        });
+        navigate("/dashboard/riwayat");
+        return;
+      }
+
+      // Jika bayar pakai Midtrans, buka Snap
       window.snap.pay(response.data.data, {
         onSuccess: function (result) {
           /* You may add your own implementation here */
@@ -353,6 +393,83 @@ export default function AddReservation({
                 {errors.court && (
                   <p className="text-[10px] font-bold text-red-500 ml-1">
                     {errors.court.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <Label
+                  htmlFor="paymentMethod"
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1"
+                >
+                  Metode Pembayaran
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  <label
+                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                      watchedPaymentMethod === "MIDTRANS"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50 text-slate-500"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      value="MIDTRANS"
+                      {...register("paymentMethod")}
+                      className="hidden"
+                    />
+                    <Zap className="h-5 w-5 mb-2" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      Midtrans
+                    </span>
+                  </label>
+
+                  <label
+                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                      watchedPaymentMethod === "SALDO"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50 text-slate-500"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      value="SALDO"
+                      {...register("paymentMethod")}
+                      className="hidden"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="mb-2"
+                    >
+                      <rect width="20" height="14" x="2" y="5" rx="2" />
+                      <line x1="2" x2="22" y1="10" y2="10" />
+                    </svg>
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      Saldo
+                    </span>
+                  </label>
+                </div>
+                {watchedPaymentMethod === "SALDO" && userProfile && (
+                  <div className="flex justify-between items-center px-4 py-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-white/5">
+                    <span className="text-[10px] font-bold text-slate-400">
+                      SALDO ANDA:
+                    </span>
+                    <span className="text-sm font-black text-slate-900 dark:text-white">
+                      {formatCurrency(userProfile.saldo)}
+                    </span>
+                  </div>
+                )}
+                {errors.paymentMethod && (
+                  <p className="text-[10px] font-bold text-red-500 ml-1">
+                    {errors.paymentMethod.message}
                   </p>
                 )}
               </div>

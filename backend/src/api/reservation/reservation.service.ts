@@ -1,5 +1,9 @@
 import { AddReservationDto } from '@/dto/add.reservation.dto';
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  BadRequestException,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -62,6 +66,47 @@ export class ReservationService {
       throw new ConflictException('Reservasi sudah ada');
     }
 
+    if (addReservationDto.paymentMethod === 'SALDO') {
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user || user.saldo < total) {
+        throw new BadRequestException('Saldo tidak cukup');
+      }
+
+      await this.prisma.$transaction([
+        this.prisma.user.update({
+          where: { id: userId },
+          data: {
+            saldo: {
+              decrement: total,
+            },
+          },
+        }),
+        this.prisma.reservation.create({
+          data: {
+            id: reservationId,
+            date: new Date(addReservationDto.date),
+            location: addReservationDto.location,
+            startTime: addReservationDto.startTime,
+            endTime: addReservationDto.endTime,
+            court: addReservationDto.court,
+            price: addReservationDto.price,
+            status: ReservationStatus.PAID,
+            paymentMethod: 'SALDO',
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+          },
+        }),
+      ]);
+
+      return null; // Return null if paid with saldo
+    }
+
     const transactionToken = await this.midtransService.payment(
       addReservationDto,
       orderId,
@@ -76,6 +121,7 @@ export class ReservationService {
         endTime: addReservationDto.endTime,
         court: addReservationDto.court,
         price: addReservationDto.price,
+        paymentMethod: 'MIDTRANS',
         user: {
           connect: {
             id: userId,

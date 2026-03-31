@@ -11,4 +11,5 @@
 export type * from './models/User.js'
 export type * from './models/Reservation.js'
 export type * from './models/Midtrans.js'
+export type * from './models/Topup.js'
 export type * from './commonInputTypes.js'

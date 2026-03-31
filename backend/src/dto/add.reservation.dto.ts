@@ -24,4 +24,8 @@ export class AddReservationDto {
   @IsString()
   @IsNotEmpty()
   price: string;
+
+  @IsString()
+  @IsNotEmpty()
+  paymentMethod: 'MIDTRANS' | 'SALDO';
 }

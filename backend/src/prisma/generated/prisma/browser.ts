@@ -32,3 +32,8 @@ export type Reservation = Prisma.ReservationModel
  * 
  */
 export type Midtrans = Prisma.MidtransModel
+/**
+ * Model Topup
+ * 
+ */
+export type Topup = Prisma.TopupModel

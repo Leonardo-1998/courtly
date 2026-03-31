@@ -381,9 +381,9 @@ export type MidtransUncheckedUpdateManyInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type MidtransScalarRelationFilter = {
-  is?: Prisma.MidtransWhereInput
-  isNot?: Prisma.MidtransWhereInput
+export type MidtransNullableScalarRelationFilter = {
+  is?: Prisma.MidtransWhereInput | null
+  isNot?: Prisma.MidtransWhereInput | null
 }
 
 export type MidtransCountOrderByAggregateInput = {
@@ -433,10 +433,12 @@ export type MidtransCreateNestedOneWithoutReservationInput = {
   connect?: Prisma.MidtransWhereUniqueInput
 }
 
-export type MidtransUpdateOneRequiredWithoutReservationNestedInput = {
+export type MidtransUpdateOneWithoutReservationNestedInput = {
   create?: Prisma.XOR<Prisma.MidtransCreateWithoutReservationInput, Prisma.MidtransUncheckedCreateWithoutReservationInput>
   connectOrCreate?: Prisma.MidtransCreateOrConnectWithoutReservationInput
   upsert?: Prisma.MidtransUpsertWithoutReservationInput
+  disconnect?: Prisma.MidtransWhereInput | boolean
+  delete?: Prisma.MidtransWhereInput | boolean
   connect?: Prisma.MidtransWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MidtransUpdateToOneWithWhereWithoutReservationInput, Prisma.MidtransUpdateWithoutReservationInput>, Prisma.MidtransUncheckedUpdateWithoutReservationInput>
 }

@@ -20,6 +20,11 @@ enum ReservationStatus {
   CANCELLED @map("cancelled")
 }
 
+enum PaymentMethod {
+  MIDTRANS  @map("midtrans")
+  SALDO     @map("saldo")
+}
+
 enum MidtransStatus {
   PENDING    @map("pending")
   SETTLEMENT @map("settlement")
@@ -45,6 +50,7 @@ model User {
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)
   reservations Reservation[]
+  topups Topup[]
 }
 
 model Reservation {
@@ -59,13 +65,13 @@ model Reservation {
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)
   status ReservationStatus @default(PENDING)
+  paymentMethod PaymentMethod @default(MIDTRANS)
 
   user User @relation(fields: [userId], references: [id])
   userId String
 
-  midtrans Midtrans @relation(fields: [midtransId], references: [id])
-  midtransId String
-
+  midtrans Midtrans? @relation(fields: [midtransId], references: [id])
+  midtransId String?
 }
 
 model Midtrans {
@@ -79,4 +85,15 @@ model Midtrans {
   isDeleted Boolean @default(false)
 
   reservation Reservation[]
+}
+
+model Topup {
+  id String @id @default(uuid())
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+  userId String
 }

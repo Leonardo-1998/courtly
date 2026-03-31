@@ -386,7 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Reservation: 'Reservation',
-  Midtrans: 'Midtrans'
+  Midtrans: 'Midtrans',
+  Topup: 'Topup'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "reservation" | "midtrans"
+    modelProps: "user" | "reservation" | "midtrans" | "topup"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Topup: {
+      payload: Prisma.$TopupPayload<ExtArgs>
+      fields: Prisma.TopupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TopupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TopupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        findFirst: {
+          args: Prisma.TopupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TopupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        findMany: {
+          args: Prisma.TopupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>[]
+        }
+        create: {
+          args: Prisma.TopupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        createMany: {
+          args: Prisma.TopupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TopupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>[]
+        }
+        delete: {
+          args: Prisma.TopupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        update: {
+          args: Prisma.TopupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        deleteMany: {
+          args: Prisma.TopupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TopupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TopupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>[]
+        }
+        upsert: {
+          args: Prisma.TopupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopupPayload>
+        }
+        aggregate: {
+          args: Prisma.TopupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTopup>
+        }
+        groupBy: {
+          args: Prisma.TopupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TopupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopupCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -693,6 +768,7 @@ export const ReservationScalarFieldEnum = {
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
   status: 'status',
+  paymentMethod: 'paymentMethod',
   userId: 'userId',
   midtransId: 'midtransId'
 } as const
@@ -714,6 +790,18 @@ export const MidtransScalarFieldEnum = {
 export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typeof MidtransScalarFieldEnum]
 
 
+export const TopupScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted',
+  userId: 'userId'
+} as const
+
+export type TopupScalarFieldEnum = (typeof TopupScalarFieldEnum)[keyof typeof TopupScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -728,6 +816,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -796,6 +892,20 @@ export type EnumReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'ReservationStatus[]'
  */
 export type ListEnumReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReservationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod'
+ */
+export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod[]'
+ */
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
     
 
 
@@ -924,6 +1034,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   reservation?: Prisma.ReservationOmit
   midtrans?: Prisma.MidtransOmit
+  topup?: Prisma.TopupOmit
 }
 
 /* Types for Logging */

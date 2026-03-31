@@ -18,6 +18,14 @@ export const ReservationStatus = {
 export type ReservationStatus = (typeof ReservationStatus)[keyof typeof ReservationStatus]
 
 
+export const PaymentMethod = {
+  MIDTRANS: 'MIDTRANS',
+  SALDO: 'SALDO'
+} as const
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
 export const MidtransStatus = {
   PENDING: 'PENDING',
   SETTLEMENT: 'SETTLEMENT',

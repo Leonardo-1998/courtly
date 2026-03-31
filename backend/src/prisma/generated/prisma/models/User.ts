@@ -241,6 +241,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   reservations?: Prisma.ReservationListRelationFilter
+  topups?: Prisma.TopupListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -253,6 +254,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   reservations?: Prisma.ReservationOrderByRelationAggregateInput
+  topups?: Prisma.TopupOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -268,6 +270,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   reservations?: Prisma.ReservationListRelationFilter
+  topups?: Prisma.TopupListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -310,6 +313,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   reservations?: Prisma.ReservationCreateNestedManyWithoutUserInput
+  topups?: Prisma.TopupCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -322,6 +326,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput
+  topups?: Prisma.TopupUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -334,6 +339,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reservations?: Prisma.ReservationUpdateManyWithoutUserNestedInput
+  topups?: Prisma.TopupUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -346,6 +352,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reservations?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput
+  topups?: Prisma.TopupUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -461,6 +468,20 @@ export type UserUpdateOneRequiredWithoutReservationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReservationsInput, Prisma.UserUpdateWithoutReservationsInput>, Prisma.UserUncheckedUpdateWithoutReservationsInput>
 }
 
+export type UserCreateNestedOneWithoutTopupsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTopupsInput, Prisma.UserUncheckedCreateWithoutTopupsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTopupsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTopupsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTopupsInput, Prisma.UserUncheckedCreateWithoutTopupsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTopupsInput
+  upsert?: Prisma.UserUpsertWithoutTopupsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTopupsInput, Prisma.UserUpdateWithoutTopupsInput>, Prisma.UserUncheckedUpdateWithoutTopupsInput>
+}
+
 export type UserCreateWithoutReservationsInput = {
   id?: string
   email: string
@@ -470,6 +491,7 @@ export type UserCreateWithoutReservationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  topups?: Prisma.TopupCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReservationsInput = {
@@ -481,6 +503,7 @@ export type UserUncheckedCreateWithoutReservationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  topups?: Prisma.TopupUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReservationsInput = {
@@ -508,6 +531,7 @@ export type UserUpdateWithoutReservationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  topups?: Prisma.TopupUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReservationsInput = {
@@ -519,6 +543,71 @@ export type UserUncheckedUpdateWithoutReservationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  topups?: Prisma.TopupUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTopupsInput = {
+  id?: string
+  email: string
+  username: string
+  password: string
+  saldo?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  reservations?: Prisma.ReservationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTopupsInput = {
+  id?: string
+  email: string
+  username: string
+  password: string
+  saldo?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTopupsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTopupsInput, Prisma.UserUncheckedCreateWithoutTopupsInput>
+}
+
+export type UserUpsertWithoutTopupsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTopupsInput, Prisma.UserUncheckedUpdateWithoutTopupsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTopupsInput, Prisma.UserUncheckedCreateWithoutTopupsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTopupsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTopupsInput, Prisma.UserUncheckedUpdateWithoutTopupsInput>
+}
+
+export type UserUpdateWithoutTopupsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  saldo?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reservations?: Prisma.ReservationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTopupsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  saldo?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -528,10 +617,12 @@ export type UserUncheckedUpdateWithoutReservationsInput = {
 
 export type UserCountOutputType = {
   reservations: number
+  topups: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reservations?: boolean | UserCountOutputTypeCountReservationsArgs
+  topups?: boolean | UserCountOutputTypeCountTopupsArgs
 }
 
 /**
@@ -551,6 +642,13 @@ export type UserCountOutputTypeCountReservationsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ReservationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTopupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TopupWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -562,6 +660,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   isDeleted?: boolean
   reservations?: boolean | Prisma.User$reservationsArgs<ExtArgs>
+  topups?: boolean | Prisma.User$topupsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -601,6 +700,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "password" | "saldo" | "createdAt" | "updatedAt" | "isDeleted", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reservations?: boolean | Prisma.User$reservationsArgs<ExtArgs>
+  topups?: boolean | Prisma.User$topupsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -610,6 +710,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     reservations: Prisma.$ReservationPayload<ExtArgs>[]
+    topups: Prisma.$TopupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1015,6 +1116,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   reservations<T extends Prisma.User$reservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  topups<T extends Prisma.User$topupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$topupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TopupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1466,6 +1568,30 @@ export type User$reservationsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
+}
+
+/**
+ * User.topups
+ */
+export type User$topupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Topup
+   */
+  select?: Prisma.TopupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Topup
+   */
+  omit?: Prisma.TopupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopupInclude<ExtArgs> | null
+  where?: Prisma.TopupWhereInput
+  orderBy?: Prisma.TopupOrderByWithRelationInput | Prisma.TopupOrderByWithRelationInput[]
+  cursor?: Prisma.TopupWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TopupScalarFieldEnum | Prisma.TopupScalarFieldEnum[]
 }
 
 /**

@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Reservation: 'Reservation',
-  Midtrans: 'Midtrans'
+  Midtrans: 'Midtrans',
+  Topup: 'Topup'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +99,7 @@ export const ReservationScalarFieldEnum = {
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
   status: 'status',
+  paymentMethod: 'paymentMethod',
   userId: 'userId',
   midtransId: 'midtransId'
 } as const
@@ -119,6 +121,18 @@ export const MidtransScalarFieldEnum = {
 export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typeof MidtransScalarFieldEnum]
 
 
+export const TopupScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted',
+  userId: 'userId'
+} as const
+
+export type TopupScalarFieldEnum = (typeof TopupScalarFieldEnum)[keyof typeof TopupScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -133,4 +147,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
