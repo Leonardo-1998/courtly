@@ -14,7 +14,25 @@ datasource db {
   provider = "postgresql"
 }
 
+enum TransactionType {
+  TOPUP
+  RESERVATION_PAYMENT
+  REFUND
+}
+
+enum TransactionStatus {
+  PENDING   @map("pending")
+  SUCCESS   @map("success")
+  CANCELLED @map("cancelled")
+}
+
 enum ReservationStatus {
+  PENDING   @map("pending")
+  PAID      @map("paid")
+  CANCELLED @map("cancelled")
+}
+
+enum TopupStatus {
   PENDING   @map("pending")
   PAID      @map("paid")
   CANCELLED @map("cancelled")
@@ -22,7 +40,7 @@ enum ReservationStatus {
 
 enum PaymentMethod {
   MIDTRANS  @map("midtrans")
-  SALDO     @map("saldo")
+  BALANCE   @map("balance")
 }
 
 enum MidtransStatus {
@@ -44,13 +62,15 @@ model User {
   id    String @id @default(uuid())
   email String @unique
   username String @unique
-  password String
-  saldo Int @default(0)
+  password String?
+  googleId String? @unique
+  balance Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)
   reservations Reservation[]
   topups Topup[]
+  transactions BalanceTransaction[]
 }
 
 model Reservation {
@@ -85,14 +105,34 @@ model Midtrans {
   isDeleted Boolean @default(false)
 
   reservation Reservation[]
+  topup Topup[]
 }
 
 model Topup {
   id String @id @default(uuid())
   amount Int
+  status TopupStatus @default(PENDING)
+  paymentMethod PaymentMethod @default(MIDTRANS)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  midtrans Midtrans? @relation(fields: [midtransId], references: [id])
+  midtransId String?
+}
+
+model BalanceTransaction {
+  id          String   @id @default(uuid())
+  amount      Int      // Positif untuk saldo masuk, Negatif untuk saldo keluar
+  type        TransactionType
+  status      TransactionStatus @default(PENDING)
+  referenceId String?  // ID dari Topup atau Reservation terkait
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id])
   userId String

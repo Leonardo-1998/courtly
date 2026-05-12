@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Put, Delete, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoginDto } from '../../dto/login.dto';
 import { RegisterDto } from '../../dto/register.dto';
@@ -33,5 +41,12 @@ export class UserController {
     const userProfile = await this.userService.getProfile(user.id);
 
     return successResponse(userProfile, 'Berhasil Ambil Profile');
+  }
+
+  @Post('google')
+  async googleLogin(@Body() body: { credential: string }): Promise<ApiResponse | null> {
+    const login = await this.userService.loginWithGoogle(body.credential);
+
+    return successResponse(login, 'Berhasil Login Google');
   }
 }

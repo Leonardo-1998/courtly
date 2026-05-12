@@ -567,10 +567,6 @@ export type EnumPaymentMethodFieldUpdateOperationsInput = {
   set?: $Enums.PaymentMethod
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ReservationCreateNestedManyWithoutMidtransInput = {
   create?: Prisma.XOR<Prisma.ReservationCreateWithoutMidtransInput, Prisma.ReservationUncheckedCreateWithoutMidtransInput> | Prisma.ReservationCreateWithoutMidtransInput[] | Prisma.ReservationUncheckedCreateWithoutMidtransInput[]
   connectOrCreate?: Prisma.ReservationCreateOrConnectWithoutMidtransInput | Prisma.ReservationCreateOrConnectWithoutMidtransInput[]

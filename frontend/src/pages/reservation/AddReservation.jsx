@@ -38,7 +38,7 @@ const reservationSchema = z
     endTime: z.string().min(1, { message: "Pilih jam selesai" }),
     court: z.string().min(1, { message: "Pilih lapangan" }),
     price: z.string(),
-    paymentMethod: z.enum(["MIDTRANS", "SALDO"], {
+    paymentMethod: z.enum(["MIDTRANS", "BALANCE"], {
       required_error: "Pilih metode pembayaran",
     }),
   })
@@ -173,8 +173,8 @@ export default function AddReservation({
     try {
       const response = await api.post("/reservation/add", values);
 
-      // Jika bayar pakai saldo, langsung sukses
-      if (values.paymentMethod === "SALDO") {
+      // Jika bayar pakai balance, langsung sukses
+      if (values.paymentMethod === "BALANCE") {
         toast.success("Reservasi Berhasil Menggunakan Saldo!", {
           position: "top-center",
           autoClose: 3000,
@@ -426,14 +426,14 @@ export default function AddReservation({
 
                   <label
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                      watchedPaymentMethod === "SALDO"
+                      watchedPaymentMethod === "BALANCE"
                         ? "border-primary bg-primary/5 text-primary"
                         : "border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50 text-slate-500"
                     }`}
                   >
                     <input
                       type="radio"
-                      value="SALDO"
+                      value="BALANCE"
                       {...register("paymentMethod")}
                       className="hidden"
                     />
@@ -453,17 +453,17 @@ export default function AddReservation({
                       <line x1="2" x2="22" y1="10" y2="10" />
                     </svg>
                     <span className="text-[10px] font-black uppercase tracking-widest">
-                      Saldo
+                      Balance
                     </span>
                   </label>
                 </div>
-                {watchedPaymentMethod === "SALDO" && userProfile && (
+                {watchedPaymentMethod === "BALANCE" && userProfile && (
                   <div className="flex justify-between items-center px-4 py-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-white/5">
                     <span className="text-[10px] font-bold text-slate-400">
-                      SALDO ANDA:
+                      BALANCE ANDA:
                     </span>
                     <span className="text-sm font-black text-slate-900 dark:text-white">
-                      {formatCurrency(userProfile.saldo)}
+                      {formatCurrency(userProfile.balance)}
                     </span>
                   </div>
                 )}

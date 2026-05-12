@@ -16,6 +16,8 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import api from "@/lib/axios";
+import { GoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 
 const loginSchema = z.object({
   identifier: z
@@ -38,7 +40,6 @@ export default function LoginPage() {
       password: "",
     },
   });
-
   const onSubmit = async (values) => {
     try {
       const response = await api.post("/user/login", values);
@@ -46,10 +47,14 @@ export default function LoginPage() {
       const token = response.data.data;
       localStorage.setItem("accessToken", token);
 
+      toast.success("Berhasil masuk! Selamat datang kembali.");
       reset();
       navigation("/dashboard");
     } catch (error) {
       console.error(error);
+      const message =
+        error.response?.data?.message || "Terjadi kesalahan saat login";
+      toast.error(message);
     }
   };
 
@@ -58,11 +63,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md relative z-10 group">
         {/* Glassmorphism Card Background */}
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border-2 border-white/60 dark:border-white/10 shadow-2xl z-0 transition-all duration-500 group-hover:shadow-primary/10"></div>
-        
+
         <Card className="relative z-10 bg-transparent border-none shadow-none overflow-hidden rounded-[2.5rem]">
           <CardHeader className="space-y-2 pt-10 pb-6 text-center">
             <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-2 shadow-inner">
-               <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="-11.5 -10.23174 23 20.46348"
                 className="h-10 w-10 text-primary"
@@ -85,7 +90,12 @@ export default function LoginPage() {
           <CardContent className="px-8 pb-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="identifier" className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Username / Email</Label>
+                <Label
+                  htmlFor="identifier"
+                  className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1"
+                >
+                  Username / Email
+                </Label>
                 <Input
                   id="identifier"
                   placeholder="name@example.com"
@@ -102,8 +112,19 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between ml-1">
-                  <Label htmlFor="password" title="Password" className="text-xs font-black uppercase tracking-widest text-slate-400">Password</Label>
-                  <Link to="#" className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Lupa Password?</Link>
+                  <Label
+                    htmlFor="password"
+                    title="Password"
+                    className="text-xs font-black uppercase tracking-widest text-slate-400"
+                  >
+                    Password
+                  </Label>
+                  <Link
+                    to="#"
+                    className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
+                  >
+                    Lupa Password?
+                  </Link>
                 </div>
                 <Input
                   id="password"
@@ -120,10 +141,54 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full text-sm font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-primary/20 transition-all active:scale-95">
+              <Button
+                type="submit"
+                className="w-full text-sm font-black uppercase tracking-widest h-14 rounded-2xl shadow-xl shadow-primary/20 transition-all active:scale-95"
+              >
                 Masuk Sekarang
               </Button>
             </form>
+
+            <div className="space-y-6 mt-8">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-slate-200 dark:border-white/10"></span>
+                </div>
+                <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
+                  <span className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl px-4 text-slate-400">
+                    Atau Masuk Dengan
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-center w-full scale-105">
+                <GoogleLogin
+                  onSuccess={async (credentialResponse) => {
+                    try {
+                      const response = await api.post(
+                        "/user/google",
+                        credentialResponse,
+                      );
+                      const token = response.data.data;
+                      localStorage.setItem("accessToken", token);
+                      toast.success("Berhasil masuk dengan Google!");
+                      reset();
+                      navigation("/dashboard");
+                    } catch (error) {
+                      console.error(error);
+                      const message = error.response?.data?.message || "Gagal masuk dengan Google";
+                      toast.error(message);
+                    }
+                  }}
+                  onError={() => {
+                    toast.error("Google Login Gagal");
+                  }}
+                  theme="filled_blue"
+                  shape="pill"
+                  width="280"
+                />
+              </div>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4 pb-10 border-t border-slate-100 dark:border-white/5 bg-slate-50/30 dark:bg-white/5 pt-6">
             <div className="text-center text-sm font-medium text-slate-500 dark:text-slate-400">

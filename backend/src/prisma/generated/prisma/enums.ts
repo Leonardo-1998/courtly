@@ -9,6 +9,24 @@
 * 🟢 You can import this file directly.
 */
 
+export const TransactionType = {
+  TOPUP: 'TOPUP',
+  RESERVATION_PAYMENT: 'RESERVATION_PAYMENT',
+  REFUND: 'REFUND'
+} as const
+
+export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
+export const TransactionStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
+
+
 export const ReservationStatus = {
   PENDING: 'PENDING',
   PAID: 'PAID',
@@ -18,9 +36,18 @@ export const ReservationStatus = {
 export type ReservationStatus = (typeof ReservationStatus)[keyof typeof ReservationStatus]
 
 
+export const TopupStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TopupStatus = (typeof TopupStatus)[keyof typeof TopupStatus]
+
+
 export const PaymentMethod = {
   MIDTRANS: 'MIDTRANS',
-  SALDO: 'SALDO'
+  BALANCE: 'BALANCE'
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]

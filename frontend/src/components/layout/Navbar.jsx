@@ -122,7 +122,7 @@ export default function Navbar() {
                     Saldo Anda
                   </span>
                   <span className="text-xs font-black text-slate-900 dark:text-white leading-none">
-                    {userData ? formatCurrency(userData.saldo) : "..."}
+                    {userData ? formatCurrency(userData.balance) : "..."}
                   </span>
                 </div>
               </div>

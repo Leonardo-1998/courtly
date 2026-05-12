@@ -11,6 +11,8 @@ import {
   ErrorState,
   EmptyState,
 } from "./components/DashboardStates";
+import WalletCard from "./components/WalletCard";
+import TopupModal from "./components/TopupModal";
 
 const UserDashboard = () => {
   const [reservations, setReservations] = useState([]);
@@ -18,6 +20,8 @@ const UserDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [viewAll, setViewAll] = useState(false);
+  const [balance, setBalance] = useState(0);
+  const [isTopupModalOpen, setIsTopupModalOpen] = useState(false);
 
   const getReservationStart = (item) => {
     const reservationDate = new Date(item.date);
@@ -106,17 +110,18 @@ const UserDashboard = () => {
     const fetchMyReservations = async () => {
       try {
         setLoading(true);
-        const response = await api.get(
-          "reservation/my-reservations?status=pending,paid",
-        );
+        const [resResponse, userResponse] = await Promise.all([
+          api.get("reservation/my-reservations?status=pending,paid"),
+          api.get("user/me"),
+        ]);
 
-        const data = response.data.data.filter((item) => !isPast(item));
-
+        const data = resResponse.data.data.filter((item) => !isPast(item));
         setReservations(data || []);
         setClosestReservations(data.slice(0, 3) || []);
+        setBalance(userResponse.data.data.balance || 0);
       } catch (err) {
         console.error("Fetch error:", err);
-        setError("Gagal mengambil data reservasi");
+        setError("Gagal mengambil data dashboard");
       } finally {
         setLoading(false);
       }
@@ -146,6 +151,11 @@ const UserDashboard = () => {
           description="Kelola dan lihat riwayat reservasi Anda dengan sentuhan modern."
         />
 
+        <WalletCard
+          balance={balance}
+          onTopupClick={() => setIsTopupModalOpen(true)}
+        />
+
         <div className="space-y-6">
           <ActiveReservationsHeader count={reservations.length} />
 
@@ -171,6 +181,15 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
+
+      <TopupModal
+        isOpen={isTopupModalOpen}
+        onClose={() => setIsTopupModalOpen(false)}
+        onTokenReceived={(token) => {
+          console.log("Token received for Top-up:", token);
+          handlePayment(token);
+        }}
+      />
     </div>
   );
 };

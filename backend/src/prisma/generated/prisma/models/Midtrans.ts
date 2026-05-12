@@ -241,6 +241,7 @@ export type MidtransWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Midtrans"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Midtrans"> | boolean
   reservation?: Prisma.ReservationListRelationFilter
+  topup?: Prisma.TopupListRelationFilter
 }
 
 export type MidtransOrderByWithRelationInput = {
@@ -253,6 +254,7 @@ export type MidtransOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   reservation?: Prisma.ReservationOrderByRelationAggregateInput
+  topup?: Prisma.TopupOrderByRelationAggregateInput
 }
 
 export type MidtransWhereUniqueInput = Prisma.AtLeast<{
@@ -268,6 +270,7 @@ export type MidtransWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Midtrans"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Midtrans"> | boolean
   reservation?: Prisma.ReservationListRelationFilter
+  topup?: Prisma.TopupListRelationFilter
 }, "id">
 
 export type MidtransOrderByWithAggregationInput = {
@@ -310,6 +313,7 @@ export type MidtransCreateInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   reservation?: Prisma.ReservationCreateNestedManyWithoutMidtransInput
+  topup?: Prisma.TopupCreateNestedManyWithoutMidtransInput
 }
 
 export type MidtransUncheckedCreateInput = {
@@ -322,6 +326,7 @@ export type MidtransUncheckedCreateInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutMidtransInput
+  topup?: Prisma.TopupUncheckedCreateNestedManyWithoutMidtransInput
 }
 
 export type MidtransUpdateInput = {
@@ -334,6 +339,7 @@ export type MidtransUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reservation?: Prisma.ReservationUpdateManyWithoutMidtransNestedInput
+  topup?: Prisma.TopupUpdateManyWithoutMidtransNestedInput
 }
 
 export type MidtransUncheckedUpdateInput = {
@@ -346,6 +352,7 @@ export type MidtransUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reservation?: Prisma.ReservationUncheckedUpdateManyWithoutMidtransNestedInput
+  topup?: Prisma.TopupUncheckedUpdateManyWithoutMidtransNestedInput
 }
 
 export type MidtransCreateManyInput = {
@@ -447,6 +454,22 @@ export type EnumMidtransStatusFieldUpdateOperationsInput = {
   set?: $Enums.MidtransStatus
 }
 
+export type MidtransCreateNestedOneWithoutTopupInput = {
+  create?: Prisma.XOR<Prisma.MidtransCreateWithoutTopupInput, Prisma.MidtransUncheckedCreateWithoutTopupInput>
+  connectOrCreate?: Prisma.MidtransCreateOrConnectWithoutTopupInput
+  connect?: Prisma.MidtransWhereUniqueInput
+}
+
+export type MidtransUpdateOneWithoutTopupNestedInput = {
+  create?: Prisma.XOR<Prisma.MidtransCreateWithoutTopupInput, Prisma.MidtransUncheckedCreateWithoutTopupInput>
+  connectOrCreate?: Prisma.MidtransCreateOrConnectWithoutTopupInput
+  upsert?: Prisma.MidtransUpsertWithoutTopupInput
+  disconnect?: Prisma.MidtransWhereInput | boolean
+  delete?: Prisma.MidtransWhereInput | boolean
+  connect?: Prisma.MidtransWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MidtransUpdateToOneWithWhereWithoutTopupInput, Prisma.MidtransUpdateWithoutTopupInput>, Prisma.MidtransUncheckedUpdateWithoutTopupInput>
+}
+
 export type MidtransCreateWithoutReservationInput = {
   id?: string
   orderId: string
@@ -456,6 +479,7 @@ export type MidtransCreateWithoutReservationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  topup?: Prisma.TopupCreateNestedManyWithoutMidtransInput
 }
 
 export type MidtransUncheckedCreateWithoutReservationInput = {
@@ -467,6 +491,7 @@ export type MidtransUncheckedCreateWithoutReservationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  topup?: Prisma.TopupUncheckedCreateNestedManyWithoutMidtransInput
 }
 
 export type MidtransCreateOrConnectWithoutReservationInput = {
@@ -494,6 +519,7 @@ export type MidtransUpdateWithoutReservationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  topup?: Prisma.TopupUpdateManyWithoutMidtransNestedInput
 }
 
 export type MidtransUncheckedUpdateWithoutReservationInput = {
@@ -505,6 +531,71 @@ export type MidtransUncheckedUpdateWithoutReservationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  topup?: Prisma.TopupUncheckedUpdateManyWithoutMidtransNestedInput
+}
+
+export type MidtransCreateWithoutTopupInput = {
+  id?: string
+  orderId: string
+  grossAmount: number
+  token: string
+  status?: $Enums.MidtransStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  reservation?: Prisma.ReservationCreateNestedManyWithoutMidtransInput
+}
+
+export type MidtransUncheckedCreateWithoutTopupInput = {
+  id?: string
+  orderId: string
+  grossAmount: number
+  token: string
+  status?: $Enums.MidtransStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutMidtransInput
+}
+
+export type MidtransCreateOrConnectWithoutTopupInput = {
+  where: Prisma.MidtransWhereUniqueInput
+  create: Prisma.XOR<Prisma.MidtransCreateWithoutTopupInput, Prisma.MidtransUncheckedCreateWithoutTopupInput>
+}
+
+export type MidtransUpsertWithoutTopupInput = {
+  update: Prisma.XOR<Prisma.MidtransUpdateWithoutTopupInput, Prisma.MidtransUncheckedUpdateWithoutTopupInput>
+  create: Prisma.XOR<Prisma.MidtransCreateWithoutTopupInput, Prisma.MidtransUncheckedCreateWithoutTopupInput>
+  where?: Prisma.MidtransWhereInput
+}
+
+export type MidtransUpdateToOneWithWhereWithoutTopupInput = {
+  where?: Prisma.MidtransWhereInput
+  data: Prisma.XOR<Prisma.MidtransUpdateWithoutTopupInput, Prisma.MidtransUncheckedUpdateWithoutTopupInput>
+}
+
+export type MidtransUpdateWithoutTopupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.StringFieldUpdateOperationsInput | string
+  grossAmount?: Prisma.IntFieldUpdateOperationsInput | number
+  token?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMidtransStatusFieldUpdateOperationsInput | $Enums.MidtransStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reservation?: Prisma.ReservationUpdateManyWithoutMidtransNestedInput
+}
+
+export type MidtransUncheckedUpdateWithoutTopupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.StringFieldUpdateOperationsInput | string
+  grossAmount?: Prisma.IntFieldUpdateOperationsInput | number
+  token?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMidtransStatusFieldUpdateOperationsInput | $Enums.MidtransStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutMidtransNestedInput
 }
 
 
@@ -514,10 +605,12 @@ export type MidtransUncheckedUpdateWithoutReservationInput = {
 
 export type MidtransCountOutputType = {
   reservation: number
+  topup: number
 }
 
 export type MidtransCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reservation?: boolean | MidtransCountOutputTypeCountReservationArgs
+  topup?: boolean | MidtransCountOutputTypeCountTopupArgs
 }
 
 /**
@@ -537,6 +630,13 @@ export type MidtransCountOutputTypeCountReservationArgs<ExtArgs extends runtime.
   where?: Prisma.ReservationWhereInput
 }
 
+/**
+ * MidtransCountOutputType without action
+ */
+export type MidtransCountOutputTypeCountTopupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TopupWhereInput
+}
+
 
 export type MidtransSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -548,6 +648,7 @@ export type MidtransSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   isDeleted?: boolean
   reservation?: boolean | Prisma.Midtrans$reservationArgs<ExtArgs>
+  topup?: boolean | Prisma.Midtrans$topupArgs<ExtArgs>
   _count?: boolean | Prisma.MidtransCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["midtrans"]>
 
@@ -587,6 +688,7 @@ export type MidtransSelectScalar = {
 export type MidtransOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "grossAmount" | "token" | "status" | "createdAt" | "updatedAt" | "isDeleted", ExtArgs["result"]["midtrans"]>
 export type MidtransInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reservation?: boolean | Prisma.Midtrans$reservationArgs<ExtArgs>
+  topup?: boolean | Prisma.Midtrans$topupArgs<ExtArgs>
   _count?: boolean | Prisma.MidtransCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MidtransIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -596,6 +698,7 @@ export type $MidtransPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Midtrans"
   objects: {
     reservation: Prisma.$ReservationPayload<ExtArgs>[]
+    topup: Prisma.$TopupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1001,6 +1104,7 @@ readonly fields: MidtransFieldRefs;
 export interface Prisma__MidtransClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   reservation<T extends Prisma.Midtrans$reservationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Midtrans$reservationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  topup<T extends Prisma.Midtrans$topupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Midtrans$topupArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TopupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1452,6 +1556,30 @@ export type Midtrans$reservationArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
+}
+
+/**
+ * Midtrans.topup
+ */
+export type Midtrans$topupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Topup
+   */
+  select?: Prisma.TopupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Topup
+   */
+  omit?: Prisma.TopupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopupInclude<ExtArgs> | null
+  where?: Prisma.TopupWhereInput
+  orderBy?: Prisma.TopupOrderByWithRelationInput | Prisma.TopupOrderByWithRelationInput[]
+  cursor?: Prisma.TopupWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TopupScalarFieldEnum | Prisma.TopupScalarFieldEnum[]
 }
 
 /**

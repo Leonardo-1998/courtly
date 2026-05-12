@@ -59,3 +59,8 @@ export type Midtrans = Prisma.MidtransModel
  * 
  */
 export type Topup = Prisma.TopupModel
+/**
+ * Model BalanceTransaction
+ * 
+ */
+export type BalanceTransaction = Prisma.BalanceTransactionModel

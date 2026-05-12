@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MidtransController } from './midtrans.controller';
 import { MidtransService } from './midtrans.service';
+import { WalletModule } from '../wallet/wallet.module';
 
 @Module({
-  imports: [],
+  imports: [WalletModule],
   controllers: [MidtransController],
   providers: [MidtransService],
   exports: [MidtransService],

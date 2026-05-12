@@ -5,6 +5,8 @@ import { ReservationModule } from './api/reservation/reservation.module';
 import { MidtransModule } from './api/midtrans/midtrans.module';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TopupModule } from './api/topup/topup.module';
+import { WalletModule } from './api/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     PrismaModule,
     ReservationModule,
     MidtransModule,
+    TopupModule,
+    WalletModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

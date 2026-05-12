@@ -8,7 +8,12 @@ import { randomUUID } from 'crypto';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 import { MidtransService } from '@/api/midtrans/midtrans.service';
-import { ReservationStatus } from '@/prisma/generated/prisma/enums';
+import { WalletService } from '../wallet/wallet.service';
+import {
+  ReservationStatus,
+  TransactionType,
+  TransactionStatus,
+} from '@/prisma/generated/prisma/enums';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
@@ -16,6 +21,7 @@ export class ReservationService {
   constructor(
     private prisma: PrismaService,
     private midtransService: MidtransService,
+    private walletService: WalletService,
   ) {}
 
   async addReservation(userId: string, addReservationDto: AddReservationDto) {
@@ -66,25 +72,26 @@ export class ReservationService {
       throw new ConflictException('Reservasi sudah ada');
     }
 
-    if (addReservationDto.paymentMethod === 'SALDO') {
+    if (addReservationDto.paymentMethod === 'BALANCE') {
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
       });
 
-      if (!user || user.saldo < total) {
+      if (!user || user.balance < total) {
         throw new BadRequestException('Saldo tidak cukup');
       }
 
-      await this.prisma.$transaction([
-        this.prisma.user.update({
+      await this.prisma.$transaction(async (tx) => {
+        await tx.user.update({
           where: { id: userId },
           data: {
-            saldo: {
+            balance: {
               decrement: total,
             },
           },
-        }),
-        this.prisma.reservation.create({
+        });
+        
+        await tx.reservation.create({
           data: {
             id: reservationId,
             date: new Date(addReservationDto.date),
@@ -94,23 +101,29 @@ export class ReservationService {
             court: addReservationDto.court,
             price: addReservationDto.price,
             status: ReservationStatus.PAID,
-            paymentMethod: 'SALDO',
+            paymentMethod: 'BALANCE',
             user: {
               connect: {
                 id: userId,
               },
             },
           },
-        }),
-      ]);
+        });
+
+        await this.walletService.createTransaction({
+          userId,
+          amount: -total,
+          type: TransactionType.RESERVATION_PAYMENT,
+          status: TransactionStatus.SUCCESS,
+          referenceId: reservationId,
+          description: `Pembayaran reservasi di ${addReservationDto.location} - ${addReservationDto.court}`,
+        });
+      });
 
       return null; // Return null if paid with saldo
     }
 
-    const transactionToken = await this.midtransService.payment(
-      addReservationDto,
-      orderId,
-    );
+    const transactionToken = await this.midtransService.payment(total, orderId);
 
     await this.prisma.reservation.create({
       data: {

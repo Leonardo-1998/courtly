@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Reservation: 'Reservation',
   Midtrans: 'Midtrans',
-  Topup: 'Topup'
+  Topup: 'Topup',
+  BalanceTransaction: 'BalanceTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +79,8 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  saldo: 'saldo',
+  googleId: 'googleId',
+  balance: 'balance',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted'
@@ -124,13 +126,31 @@ export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typ
 export const TopupScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  userId: 'userId'
+  userId: 'userId',
+  midtransId: 'midtransId'
 } as const
 
 export type TopupScalarFieldEnum = (typeof TopupScalarFieldEnum)[keyof typeof TopupScalarFieldEnum]
+
+
+export const BalanceTransactionScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  type: 'type',
+  status: 'status',
+  referenceId: 'referenceId',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type BalanceTransactionScalarFieldEnum = (typeof BalanceTransactionScalarFieldEnum)[keyof typeof BalanceTransactionScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -387,7 +387,8 @@ export const ModelName = {
   User: 'User',
   Reservation: 'Reservation',
   Midtrans: 'Midtrans',
-  Topup: 'Topup'
+  Topup: 'Topup',
+  BalanceTransaction: 'BalanceTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "reservation" | "midtrans" | "topup"
+    modelProps: "user" | "reservation" | "midtrans" | "topup" | "balanceTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BalanceTransaction: {
+      payload: Prisma.$BalanceTransactionPayload<ExtArgs>
+      fields: Prisma.BalanceTransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BalanceTransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BalanceTransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.BalanceTransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BalanceTransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        findMany: {
+          args: Prisma.BalanceTransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>[]
+        }
+        create: {
+          args: Prisma.BalanceTransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        createMany: {
+          args: Prisma.BalanceTransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BalanceTransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.BalanceTransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        update: {
+          args: Prisma.BalanceTransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.BalanceTransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BalanceTransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BalanceTransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.BalanceTransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceTransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.BalanceTransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBalanceTransaction>
+        }
+        groupBy: {
+          args: Prisma.BalanceTransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceTransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BalanceTransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -747,7 +822,8 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   password: 'password',
-  saldo: 'saldo',
+  googleId: 'googleId',
+  balance: 'balance',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted'
@@ -793,13 +869,31 @@ export type MidtransScalarFieldEnum = (typeof MidtransScalarFieldEnum)[keyof typ
 export const TopupScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDeleted: 'isDeleted',
-  userId: 'userId'
+  userId: 'userId',
+  midtransId: 'midtransId'
 } as const
 
 export type TopupScalarFieldEnum = (typeof TopupScalarFieldEnum)[keyof typeof TopupScalarFieldEnum]
+
+
+export const BalanceTransactionScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  type: 'type',
+  status: 'status',
+  referenceId: 'referenceId',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type BalanceTransactionScalarFieldEnum = (typeof BalanceTransactionScalarFieldEnum)[keyof typeof BalanceTransactionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -924,6 +1018,48 @@ export type ListEnumMidtransStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'TopupStatus'
+ */
+export type EnumTopupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TopupStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TopupStatus[]'
+ */
+export type ListEnumTopupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TopupStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType'
+ */
+export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType[]'
+ */
+export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionStatus'
+ */
+export type EnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionStatus[]'
+ */
+export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1035,6 +1171,7 @@ export type GlobalOmitConfig = {
   reservation?: Prisma.ReservationOmit
   midtrans?: Prisma.MidtransOmit
   topup?: Prisma.TopupOmit
+  balanceTransaction?: Prisma.BalanceTransactionOmit
 }
 
 /* Types for Logging */

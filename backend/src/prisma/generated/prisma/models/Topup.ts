@@ -37,28 +37,37 @@ export type TopupSumAggregateOutputType = {
 export type TopupMinAggregateOutputType = {
   id: string | null
   amount: number | null
+  status: $Enums.TopupStatus | null
+  paymentMethod: $Enums.PaymentMethod | null
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
   userId: string | null
+  midtransId: string | null
 }
 
 export type TopupMaxAggregateOutputType = {
   id: string | null
   amount: number | null
+  status: $Enums.TopupStatus | null
+  paymentMethod: $Enums.PaymentMethod | null
   createdAt: Date | null
   updatedAt: Date | null
   isDeleted: boolean | null
   userId: string | null
+  midtransId: string | null
 }
 
 export type TopupCountAggregateOutputType = {
   id: number
   amount: number
+  status: number
+  paymentMethod: number
   createdAt: number
   updatedAt: number
   isDeleted: number
   userId: number
+  midtransId: number
   _all: number
 }
 
@@ -74,28 +83,37 @@ export type TopupSumAggregateInputType = {
 export type TopupMinAggregateInputType = {
   id?: true
   amount?: true
+  status?: true
+  paymentMethod?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
   userId?: true
+  midtransId?: true
 }
 
 export type TopupMaxAggregateInputType = {
   id?: true
   amount?: true
+  status?: true
+  paymentMethod?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
   userId?: true
+  midtransId?: true
 }
 
 export type TopupCountAggregateInputType = {
   id?: true
   amount?: true
+  status?: true
+  paymentMethod?: true
   createdAt?: true
   updatedAt?: true
   isDeleted?: true
   userId?: true
+  midtransId?: true
   _all?: true
 }
 
@@ -188,10 +206,13 @@ export type TopupGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type TopupGroupByOutputType = {
   id: string
   amount: number
+  status: $Enums.TopupStatus
+  paymentMethod: $Enums.PaymentMethod
   createdAt: Date
   updatedAt: Date
   isDeleted: boolean
   userId: string
+  midtransId: string | null
   _count: TopupCountAggregateOutputType | null
   _avg: TopupAvgAggregateOutputType | null
   _sum: TopupSumAggregateOutputType | null
@@ -220,21 +241,29 @@ export type TopupWhereInput = {
   NOT?: Prisma.TopupWhereInput | Prisma.TopupWhereInput[]
   id?: Prisma.StringFilter<"Topup"> | string
   amount?: Prisma.IntFilter<"Topup"> | number
+  status?: Prisma.EnumTopupStatusFilter<"Topup"> | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Topup"> | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Topup"> | boolean
   userId?: Prisma.StringFilter<"Topup"> | string
+  midtransId?: Prisma.StringNullableFilter<"Topup"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  midtrans?: Prisma.XOR<Prisma.MidtransNullableScalarRelationFilter, Prisma.MidtransWhereInput> | null
 }
 
 export type TopupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  midtrans?: Prisma.MidtransOrderByWithRelationInput
 }
 
 export type TopupWhereUniqueInput = Prisma.AtLeast<{
@@ -243,20 +272,27 @@ export type TopupWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TopupWhereInput[]
   NOT?: Prisma.TopupWhereInput | Prisma.TopupWhereInput[]
   amount?: Prisma.IntFilter<"Topup"> | number
+  status?: Prisma.EnumTopupStatusFilter<"Topup"> | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Topup"> | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Topup"> | boolean
   userId?: Prisma.StringFilter<"Topup"> | string
+  midtransId?: Prisma.StringNullableFilter<"Topup"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  midtrans?: Prisma.XOR<Prisma.MidtransNullableScalarRelationFilter, Prisma.MidtransWhereInput> | null
 }, "id">
 
 export type TopupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TopupCountOrderByAggregateInput
   _avg?: Prisma.TopupAvgOrderByAggregateInput
   _max?: Prisma.TopupMaxOrderByAggregateInput
@@ -270,60 +306,80 @@ export type TopupScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TopupScalarWhereWithAggregatesInput | Prisma.TopupScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Topup"> | string
   amount?: Prisma.IntWithAggregatesFilter<"Topup"> | number
+  status?: Prisma.EnumTopupStatusWithAggregatesFilter<"Topup"> | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodWithAggregatesFilter<"Topup"> | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Topup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Topup"> | Date | string
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Topup"> | boolean
   userId?: Prisma.StringWithAggregatesFilter<"Topup"> | string
+  midtransId?: Prisma.StringNullableWithAggregatesFilter<"Topup"> | string | null
 }
 
 export type TopupCreateInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTopupsInput
+  midtrans?: Prisma.MidtransCreateNestedOneWithoutTopupInput
 }
 
 export type TopupUncheckedCreateInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
   userId: string
+  midtransId?: string | null
 }
 
 export type TopupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTopupsNestedInput
+  midtrans?: Prisma.MidtransUpdateOneWithoutTopupNestedInput
 }
 
 export type TopupUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  midtransId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TopupCreateManyInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
   userId: string
+  midtransId?: string | null
 }
 
 export type TopupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -332,10 +388,13 @@ export type TopupUpdateManyMutationInput = {
 export type TopupUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  midtransId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TopupListRelationFilter = {
@@ -351,10 +410,13 @@ export type TopupOrderByRelationAggregateInput = {
 export type TopupCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type TopupAvgOrderByAggregateInput = {
@@ -364,19 +426,25 @@ export type TopupAvgOrderByAggregateInput = {
 export type TopupMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type TopupMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  midtransId?: Prisma.SortOrder
 }
 
 export type TopupSumOrderByAggregateInput = {
@@ -425,20 +493,72 @@ export type TopupUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.TopupScalarWhereInput | Prisma.TopupScalarWhereInput[]
 }
 
+export type TopupCreateNestedManyWithoutMidtransInput = {
+  create?: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput> | Prisma.TopupCreateWithoutMidtransInput[] | Prisma.TopupUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.TopupCreateOrConnectWithoutMidtransInput | Prisma.TopupCreateOrConnectWithoutMidtransInput[]
+  createMany?: Prisma.TopupCreateManyMidtransInputEnvelope
+  connect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+}
+
+export type TopupUncheckedCreateNestedManyWithoutMidtransInput = {
+  create?: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput> | Prisma.TopupCreateWithoutMidtransInput[] | Prisma.TopupUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.TopupCreateOrConnectWithoutMidtransInput | Prisma.TopupCreateOrConnectWithoutMidtransInput[]
+  createMany?: Prisma.TopupCreateManyMidtransInputEnvelope
+  connect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+}
+
+export type TopupUpdateManyWithoutMidtransNestedInput = {
+  create?: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput> | Prisma.TopupCreateWithoutMidtransInput[] | Prisma.TopupUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.TopupCreateOrConnectWithoutMidtransInput | Prisma.TopupCreateOrConnectWithoutMidtransInput[]
+  upsert?: Prisma.TopupUpsertWithWhereUniqueWithoutMidtransInput | Prisma.TopupUpsertWithWhereUniqueWithoutMidtransInput[]
+  createMany?: Prisma.TopupCreateManyMidtransInputEnvelope
+  set?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  disconnect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  delete?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  connect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  update?: Prisma.TopupUpdateWithWhereUniqueWithoutMidtransInput | Prisma.TopupUpdateWithWhereUniqueWithoutMidtransInput[]
+  updateMany?: Prisma.TopupUpdateManyWithWhereWithoutMidtransInput | Prisma.TopupUpdateManyWithWhereWithoutMidtransInput[]
+  deleteMany?: Prisma.TopupScalarWhereInput | Prisma.TopupScalarWhereInput[]
+}
+
+export type TopupUncheckedUpdateManyWithoutMidtransNestedInput = {
+  create?: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput> | Prisma.TopupCreateWithoutMidtransInput[] | Prisma.TopupUncheckedCreateWithoutMidtransInput[]
+  connectOrCreate?: Prisma.TopupCreateOrConnectWithoutMidtransInput | Prisma.TopupCreateOrConnectWithoutMidtransInput[]
+  upsert?: Prisma.TopupUpsertWithWhereUniqueWithoutMidtransInput | Prisma.TopupUpsertWithWhereUniqueWithoutMidtransInput[]
+  createMany?: Prisma.TopupCreateManyMidtransInputEnvelope
+  set?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  disconnect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  delete?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  connect?: Prisma.TopupWhereUniqueInput | Prisma.TopupWhereUniqueInput[]
+  update?: Prisma.TopupUpdateWithWhereUniqueWithoutMidtransInput | Prisma.TopupUpdateWithWhereUniqueWithoutMidtransInput[]
+  updateMany?: Prisma.TopupUpdateManyWithWhereWithoutMidtransInput | Prisma.TopupUpdateManyWithWhereWithoutMidtransInput[]
+  deleteMany?: Prisma.TopupScalarWhereInput | Prisma.TopupScalarWhereInput[]
+}
+
+export type EnumTopupStatusFieldUpdateOperationsInput = {
+  set?: $Enums.TopupStatus
+}
+
 export type TopupCreateWithoutUserInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  midtrans?: Prisma.MidtransCreateNestedOneWithoutTopupInput
 }
 
 export type TopupUncheckedCreateWithoutUserInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  midtransId?: string | null
 }
 
 export type TopupCreateOrConnectWithoutUserInput = {
@@ -473,42 +593,149 @@ export type TopupScalarWhereInput = {
   NOT?: Prisma.TopupScalarWhereInput | Prisma.TopupScalarWhereInput[]
   id?: Prisma.StringFilter<"Topup"> | string
   amount?: Prisma.IntFilter<"Topup"> | number
+  status?: Prisma.EnumTopupStatusFilter<"Topup"> | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Topup"> | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Topup"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Topup"> | boolean
   userId?: Prisma.StringFilter<"Topup"> | string
+  midtransId?: Prisma.StringNullableFilter<"Topup"> | string | null
+}
+
+export type TopupCreateWithoutMidtransInput = {
+  id?: string
+  amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  user: Prisma.UserCreateNestedOneWithoutTopupsInput
+}
+
+export type TopupUncheckedCreateWithoutMidtransInput = {
+  id?: string
+  amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  userId: string
+}
+
+export type TopupCreateOrConnectWithoutMidtransInput = {
+  where: Prisma.TopupWhereUniqueInput
+  create: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput>
+}
+
+export type TopupCreateManyMidtransInputEnvelope = {
+  data: Prisma.TopupCreateManyMidtransInput | Prisma.TopupCreateManyMidtransInput[]
+  skipDuplicates?: boolean
+}
+
+export type TopupUpsertWithWhereUniqueWithoutMidtransInput = {
+  where: Prisma.TopupWhereUniqueInput
+  update: Prisma.XOR<Prisma.TopupUpdateWithoutMidtransInput, Prisma.TopupUncheckedUpdateWithoutMidtransInput>
+  create: Prisma.XOR<Prisma.TopupCreateWithoutMidtransInput, Prisma.TopupUncheckedCreateWithoutMidtransInput>
+}
+
+export type TopupUpdateWithWhereUniqueWithoutMidtransInput = {
+  where: Prisma.TopupWhereUniqueInput
+  data: Prisma.XOR<Prisma.TopupUpdateWithoutMidtransInput, Prisma.TopupUncheckedUpdateWithoutMidtransInput>
+}
+
+export type TopupUpdateManyWithWhereWithoutMidtransInput = {
+  where: Prisma.TopupScalarWhereInput
+  data: Prisma.XOR<Prisma.TopupUpdateManyMutationInput, Prisma.TopupUncheckedUpdateManyWithoutMidtransInput>
 }
 
 export type TopupCreateManyUserInput = {
   id?: string
   amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  midtransId?: string | null
 }
 
 export type TopupUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  midtrans?: Prisma.MidtransUpdateOneWithoutTopupNestedInput
 }
 
 export type TopupUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  midtransId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TopupUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  midtransId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TopupCreateManyMidtransInput = {
+  id?: string
+  amount: number
+  status?: $Enums.TopupStatus
+  paymentMethod?: $Enums.PaymentMethod
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  userId: string
+}
+
+export type TopupUpdateWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutTopupsNestedInput
+}
+
+export type TopupUncheckedUpdateWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type TopupUncheckedUpdateManyWithoutMidtransInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -516,65 +743,87 @@ export type TopupUncheckedUpdateManyWithoutUserInput = {
 export type TopupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   amount?: boolean
+  status?: boolean
+  paymentMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }, ExtArgs["result"]["topup"]>
 
 export type TopupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   amount?: boolean
+  status?: boolean
+  paymentMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }, ExtArgs["result"]["topup"]>
 
 export type TopupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   amount?: boolean
+  status?: boolean
+  paymentMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
   userId?: boolean
+  midtransId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }, ExtArgs["result"]["topup"]>
 
 export type TopupSelectScalar = {
   id?: boolean
   amount?: boolean
+  status?: boolean
+  paymentMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDeleted?: boolean
   userId?: boolean
+  midtransId?: boolean
 }
 
-export type TopupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "createdAt" | "updatedAt" | "isDeleted" | "userId", ExtArgs["result"]["topup"]>
+export type TopupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "status" | "paymentMethod" | "createdAt" | "updatedAt" | "isDeleted" | "userId" | "midtransId", ExtArgs["result"]["topup"]>
 export type TopupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }
 export type TopupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }
 export type TopupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  midtrans?: boolean | Prisma.Topup$midtransArgs<ExtArgs>
 }
 
 export type $TopupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Topup"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    midtrans: Prisma.$MidtransPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     amount: number
+    status: $Enums.TopupStatus
+    paymentMethod: $Enums.PaymentMethod
     createdAt: Date
     updatedAt: Date
     isDeleted: boolean
     userId: string
+    midtransId: string | null
   }, ExtArgs["result"]["topup"]>
   composites: {}
 }
@@ -970,6 +1219,7 @@ readonly fields: TopupFieldRefs;
 export interface Prisma__TopupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  midtrans<T extends Prisma.Topup$midtransArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Topup$midtransArgs<ExtArgs>>): Prisma.Prisma__MidtransClient<runtime.Types.Result.GetResult<Prisma.$MidtransPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1001,10 +1251,13 @@ export interface Prisma__TopupClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface TopupFieldRefs {
   readonly id: Prisma.FieldRef<"Topup", 'String'>
   readonly amount: Prisma.FieldRef<"Topup", 'Int'>
+  readonly status: Prisma.FieldRef<"Topup", 'TopupStatus'>
+  readonly paymentMethod: Prisma.FieldRef<"Topup", 'PaymentMethod'>
   readonly createdAt: Prisma.FieldRef<"Topup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Topup", 'DateTime'>
   readonly isDeleted: Prisma.FieldRef<"Topup", 'Boolean'>
   readonly userId: Prisma.FieldRef<"Topup", 'String'>
+  readonly midtransId: Prisma.FieldRef<"Topup", 'String'>
 }
     
 
@@ -1403,6 +1656,25 @@ export type TopupDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Topups to delete.
    */
   limit?: number
+}
+
+/**
+ * Topup.midtrans
+ */
+export type Topup$midtransArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Midtrans
+   */
+  select?: Prisma.MidtransSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Midtrans
+   */
+  omit?: Prisma.MidtransOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MidtransInclude<ExtArgs> | null
+  where?: Prisma.MidtransWhereInput
 }
 
 /**

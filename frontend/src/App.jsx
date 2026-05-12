@@ -49,7 +49,10 @@ function App() {
             <Route path="/reservasi" element={<ReservationList />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<UserDashboard />} />
-              <Route path="/dashboard/riwayat" element={<ReservationHistory />} />
+              <Route
+                path="/dashboard/riwayat"
+                element={<ReservationHistory />}
+              />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
